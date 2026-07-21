@@ -1,0 +1,51 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # www -> без www (канонический домен)
+  # Timeweb обычно уже делает редирект HTTP -> HTTPS на уровне сервера
+  RewriteCond %{HTTP_HOST} ^www\.kabinetbuhucheta\.ru$ [NC]
+  RewriteRule ^(.*)$ https://kabinetbuhucheta.ru/$1 [L,R=301]
+  
+  # Блокировка служебных файлов
+  <FilesMatch "\.(env|log|htaccess)$">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript
+  AddOutputFilterByType DEFLATE application/x-font-ttf font/opentype
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Разрешаем индексацию (закомментируйте, если сайт в разработке)
+  # Header set X-Robots-Tag "noindex, nofollow" env=development
+  
+  # Разрешаем встраивание в iframe для Яндекс.Вебвизора
+  # SAMEORIGIN позволяет вебвизору работать, сохраняя защиту от clickjacking
+  Header always set X-Frame-Options "SAMEORIGIN"
+  
+  # Безопасность: скрываем версию сервера
+  Header unset Server
+  Header unset X-Powered-By
+  
+  # Кэширование статических файлов
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|css|js|woff|woff2|ttf)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+</IfModule>
+
+# Дополнительные настройки для TimeWeb
+ErrorDocument 404 /404.html
+Options -Indexes
+
+AddType image/avif .avif

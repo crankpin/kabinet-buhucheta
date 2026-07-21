@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Премиальная иконка процентов/финансов -->
+  
+  <defs>
+    <linearGradient id="percentGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="percentGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27ae60;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#229954;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Тень -->
+  <ellipse cx="32" cy="58" rx="22" ry="3" fill="#1a202c" opacity="0.2"/>
+  
+  <!-- Большой процент (левая часть) -->
+  <circle cx="22" cy="28" r="14" fill="url(#percentGradient1)" stroke="#1a202c" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="22" cy="28" r="10" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.3"/>
+  <!-- Ноль -->
+  <circle cx="22" cy="28" r="6" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Символ процента (диагональная линия) -->
+  <line x1="28" y1="18" x2="36" y2="38" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  
+  <!-- Маленький процент (правая часть) -->
+  <circle cx="42" cy="36" r="10" fill="url(#percentGradient2)" stroke="#1a202c" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="42" cy="36" r="7" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.3"/>
+  <!-- Ноль -->
+  <circle cx="42" cy="36" r="4.5" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Блеск на большем круге -->
+  <circle cx="18" cy="24" r="3" fill="#ffffff" opacity="0.4"/>
+  
+  <!-- Блеск на меньшем круге -->
+  <circle cx="40" cy="32" r="2" fill="#ffffff" opacity="0.4"/>
+</svg>

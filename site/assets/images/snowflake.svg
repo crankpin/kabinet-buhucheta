@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <g stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+    <circle cx="32" cy="32" r="3"/>
+    <circle cx="32" cy="32" r="10" opacity="0.55"/>
+
+    <!-- Main ray -->
+    <g id="rayMain">
+      <path d="M32 32 L32 7"/>
+      <path d="M32 7 L29.6 4.6"/>
+      <path d="M32 7 L34.4 4.6"/>
+      <path d="M32 14 L28 10"/>
+      <path d="M32 14 L36 10"/>
+      <path d="M32 20 L27.5 16.5"/>
+      <path d="M32 20 L36.5 16.5"/>
+      <path d="M32 24 H28.7"/>
+      <path d="M32 24 H35.3"/>
+    </g>
+
+    <!-- Small ray -->
+    <g id="raySmall" opacity="0.75">
+      <path d="M32 32 L32 13"/>
+      <path d="M32 13 L30.2 11.2"/>
+      <path d="M32 13 L33.8 11.2"/>
+      <path d="M32 18 L30 16"/>
+      <path d="M32 18 L34 16"/>
+    </g>
+
+    <!-- 6 main rays -->
+    <use href="#rayMain"/>
+    <use href="#rayMain" transform="rotate(60 32 32)"/>
+    <use href="#rayMain" transform="rotate(120 32 32)"/>
+    <use href="#rayMain" transform="rotate(180 32 32)"/>
+    <use href="#rayMain" transform="rotate(240 32 32)"/>
+    <use href="#rayMain" transform="rotate(300 32 32)"/>
+
+    <!-- 6 small rays between them (30° offset) -->
+    <use href="#raySmall" transform="rotate(30 32 32)"/>
+    <use href="#raySmall" transform="rotate(90 32 32)"/>
+    <use href="#raySmall" transform="rotate(150 32 32)"/>
+    <use href="#raySmall" transform="rotate(210 32 32)"/>
+    <use href="#raySmall" transform="rotate(270 32 32)"/>
+    <use href="#raySmall" transform="rotate(330 32 32)"/>
+  </g>
+</svg>

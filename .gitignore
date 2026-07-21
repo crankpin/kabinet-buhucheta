@@ -1,0 +1,23 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# Local / secrets (на будущее)
+.env
+.env.*
+!.env.example
+admin/secrets.php
+**/credentials.php
+
+# Temp / logs
+*.log
+*.tmp
+docs/_php-check.txt
+
+# PHP local
+vendor/

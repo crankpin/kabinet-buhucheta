@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Премиальные часы -->
+  
+  <defs>
+    <linearGradient id="clockGradient" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#34495e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dialGradient" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ecf0f1;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Тень -->
+  <ellipse cx="32" cy="58" rx="18" ry="3" fill="#1a202c" opacity="0.2"/>
+  
+  <!-- Корпус часов -->
+  <circle cx="32" cy="32" r="22" fill="url(#clockGradient)" stroke="#1a202c" stroke-width="2"/>
+  
+  <!-- Циферблат -->
+  <circle cx="32" cy="32" r="18" fill="url(#dialGradient)" stroke="#34495e" stroke-width="1"/>
+  
+  <!-- Центр -->
+  <circle cx="32" cy="32" r="2" fill="#e74c3c"/>
+  
+  <!-- Стрелки -->
+  <!-- Часовая (на 3 часа) -->
+  <line x1="32" y1="32" x2="40" y2="32" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Минутная (на 12 часов) -->
+  <line x1="32" y1="32" x2="32" y2="18" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Метки часов -->
+  <!-- 12 -->
+  <line x1="32" y1="16" x2="32" y2="18" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
+  <!-- 3 -->
+  <line x1="46" y1="32" x2="48" y2="32" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
+  <!-- 6 -->
+  <line x1="32" y1="48" x2="32" y2="50" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
+  <!-- 9 -->
+  <line x1="16" y1="32" x2="18" y2="32" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Блеск -->
+  <circle cx="26" cy="26" r="3" fill="#ffffff" opacity="0.3"/>
+</svg>

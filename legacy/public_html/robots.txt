@@ -1,0 +1,20 @@
+# robots.txt для kabinetbuhucheta.ru
+# Обновлено: 2026-01-14
+
+# Правила для всех поисковых роботов
+User-agent: *
+Allow: /
+
+# Блокируем служебные файлы и директории
+Disallow: /scripts/
+Disallow: /data/
+Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /*.htaccess$
+Disallow: /*.md$
+Disallow: /*.bak$
+Disallow: /yandex_*.html
+Disallow: /update-deflator.php
+
+# Указываем путь к sitemap
+Sitemap: https://kabinetbuhucheta.ru/sitemap.xml

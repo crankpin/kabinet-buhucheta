@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Премиальный финансовый календарь с документами -->
+  
+  <defs>
+    <linearGradient id="calendarGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#34495e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="paperGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="moneyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1c40f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#95a5a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7f8c8d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Тень -->
+  <ellipse cx="32" cy="60" rx="24" ry="3" fill="#1a202c" opacity="0.25"/>
+  
+  <!-- Лист бумаги слева (задний) -->
+  <path d="M6 18 L6 46 L16 46 L16 50 L20 46 L20 18 Z" fill="url(#paperGradient)" stroke="#bdc3c7" stroke-width="1" opacity="0.9"/>
+  <line x1="10" y1="24" x2="16" y2="24" stroke="#34495e" stroke-width="0.8" opacity="0.4"/>
+  <line x1="10" y1="28" x2="16" y2="28" stroke="#34495e" stroke-width="0.8" opacity="0.4"/>
+  <line x1="10" y1="32" x2="16" y2="32" stroke="#34495e" stroke-width="0.8" opacity="0.4"/>
+  
+  <!-- Лист бумаги справа (задний) -->
+  <path d="M46 20 L46 48 L56 48 L56 52 L60 48 L60 20 Z" fill="url(#paperGradient)" stroke="#bdc3c7" stroke-width="1" opacity="0.9"/>
+  <line x1="50" y1="26" x2="56" y2="26" stroke="#34495e" stroke-width="0.8" opacity="0.4"/>
+  <line x1="50" y1="30" x2="56" y2="30" stroke="#34495e" stroke-width="0.8" opacity="0.4"/>
+  <line x1="50" y1="34" x2="56" y2="34" stroke="#34495e" stroke-width="0.8" opacity="0.4"/>
+  
+  <!-- Календарь (основной) - увеличенный -->
+  <rect x="16" y="10" width="32" height="40" rx="3" fill="url(#calendarGradient)" stroke="#1a202c" stroke-width="2"/>
+  
+  <!-- Верхняя часть календаря - металлическая скоба с отверстиями -->
+  <rect x="16" y="10" width="32" height="8" rx="3" fill="url(#metalGradient)" stroke="#5d6d7e" stroke-width="1.5"/>
+  
+  <!-- Отверстия для подвешивания -->
+  <circle cx="22" cy="14" r="1.8" fill="#2c3e50" stroke="#1a202c" stroke-width="0.5"/>
+  <circle cx="42" cy="14" r="1.8" fill="#2c3e50" stroke="#1a202c" stroke-width="0.5"/>
+  
+  <!-- Блеск на металле -->
+  <rect x="18" y="11.5" width="28" height="1.5" fill="#ffffff" opacity="0.4" rx="0.5"/>
+  
+  <!-- Текст месяца (тонкая линия) -->
+  <rect x="28" y="13" width="8" height="1.5" rx="0.5" fill="#ecf0f1" opacity="0.7"/>
+  
+  <!-- Календарная сетка -->
+  <!-- Дни недели (верхняя строка) -->
+  <rect x="20" y="22" width="6.5" height="6.5" fill="#34495e" opacity="0.25" rx="1"/>
+  <rect x="28" y="22" width="6.5" height="6.5" fill="#34495e" opacity="0.25" rx="1"/>
+  <rect x="36" y="22" width="6.5" height="6.5" fill="#34495e" opacity="0.25" rx="1"/>
+  <rect x="43.5" y="22" width="4" height="6.5" fill="#34495e" opacity="0.25" rx="1"/>
+  
+  <!-- Даты -->
+  <!-- Первая строка -->
+  <circle cx="23.25" cy="29.25" r="2.8" fill="url(#moneyGradient)" opacity="0.95"/>
+  <circle cx="31.25" cy="29.25" r="2.8" fill="#ecf0f1" opacity="0.7"/>
+  <circle cx="39.25" cy="29.25" r="2.8" fill="#ecf0f1" opacity="0.7"/>
+  <circle cx="45.5" cy="29.25" r="2.3" fill="#ecf0f1" opacity="0.7"/>
+  
+  <!-- Вторая строка -->
+  <circle cx="23.25" cy="36.5" r="2.8" fill="#ecf0f1" opacity="0.7"/>
+  <circle cx="31.25" cy="36.5" r="2.8" fill="url(#moneyGradient)" opacity="0.95"/>
+  <circle cx="39.25" cy="36.5" r="2.8" fill="#ecf0f1" opacity="0.7"/>
+  <circle cx="45.5" cy="36.5" r="2.3" fill="#ecf0f1" opacity="0.7"/>
+  
+  <!-- Третья строка -->
+  <circle cx="23.25" cy="43.75" r="2.8" fill="#ecf0f1" opacity="0.7"/>
+  <circle cx="31.25" cy="43.75" r="2.8" fill="#ecf0f1" opacity="0.7"/>
+  <circle cx="39.25" cy="43.75" r="2.8" fill="url(#moneyGradient)" opacity="0.95"/>
+  <circle cx="45.5" cy="43.75" r="2.3" fill="#ecf0f1" opacity="0.7"/>
+  
+  <!-- Символ доллара на выделенных датах -->
+  <text x="23.25" y="31" font-family="Arial, sans-serif" font-size="4" font-weight="bold" fill="#2c3e50" text-anchor="middle">$</text>
+  <text x="31.25" y="38.25" font-family="Arial, sans-serif" font-size="4" font-weight="bold" fill="#2c3e50" text-anchor="middle">$</text>
+  <text x="39.25" y="45.5" font-family="Arial, sans-serif" font-size="4" font-weight="bold" fill="#2c3e50" text-anchor="middle">$</text>
+  
+  <!-- Лист бумаги слева (передний, перекрывает календарь) -->
+  <path d="M4 22 L4 48 L14 48 L14 52 L18 48 L18 22 Z" fill="url(#paperGradient)" stroke="#95a5a6" stroke-width="1.2"/>
+  <line x1="8" y1="28" x2="14" y2="28" stroke="#34495e" stroke-width="1" opacity="0.5"/>
+  <line x1="8" y1="32" x2="14" y2="32" stroke="#34495e" stroke-width="1" opacity="0.5"/>
+  <line x1="8" y1="36" x2="14" y2="36" stroke="#34495e" stroke-width="1" opacity="0.5"/>
+  <!-- Символ доллара на документе -->
+  <text x="9" y="42" font-family="Arial, sans-serif" font-size="4.5" font-weight="bold" fill="#27ae60" text-anchor="middle">$</text>
+  
+  <!-- Лист бумаги справа (передний) -->
+  <path d="M50 24 L50 50 L58 50 L58 54 L62 50 L62 24 Z" fill="url(#paperGradient)" stroke="#95a5a6" stroke-width="1.2"/>
+  <line x1="52" y1="30" x2="58" y2="30" stroke="#34495e" stroke-width="1" opacity="0.5"/>
+  <line x1="52" y1="34" x2="58" y2="34" stroke="#34495e" stroke-width="1" opacity="0.5"/>
+  <line x1="52" y1="38" x2="58" y2="38" stroke="#34495e" stroke-width="1" opacity="0.5"/>
+  <!-- Символ доллара на документе -->
+  <text x="55" y="45" font-family="Arial, sans-serif" font-size="4.5" font-weight="bold" fill="#27ae60" text-anchor="middle">$</text>
+  
+  <!-- Блеск на календаре -->
+  <path d="M20 12 L24 12 Q26 14 24 16 L20 16 Z" fill="#ffffff" opacity="0.5"/>
+</svg>

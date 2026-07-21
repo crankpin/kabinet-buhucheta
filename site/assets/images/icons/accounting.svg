@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Премиальный калькулятор -->
+  
+  <!-- Тень -->
+  <ellipse cx="32" cy="58" rx="18" ry="3" fill="#1a202c" opacity="0.2"/>
+  
+  <!-- Корпус калькулятора (градиент) -->
+  <defs>
+    <linearGradient id="calcGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#34495e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="screenGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e2832;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f1419;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buttonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ecf0f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bdc3c7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Корпус -->
+  <rect x="10" y="6" width="44" height="50" rx="4" fill="url(#calcGradient)" stroke="#1a202c" stroke-width="1.5"/>
+  
+  <!-- Экран (с градиентом) -->
+  <rect x="14" y="10" width="36" height="14" rx="2" fill="url(#screenGradient)"/>
+  <rect x="14" y="10" width="36" height="14" rx="2" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Свечение экрана -->
+  <rect x="15" y="11" width="34" height="12" rx="1.5" fill="#27ae60" opacity="0.3"/>
+  
+  <!-- Индикатор на экране (цифры) -->
+  <text x="48" y="22" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#27ae60" text-anchor="end">1234</text>
+  
+  <!-- Кнопки -->
+  <!-- Первый ряд -->
+  <circle cx="18" cy="30" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="26" cy="30" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="34" cy="30" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="42" cy="30" r="3.5" fill="#e74c3c" stroke="#c0392b" stroke-width="1"/>
+  
+  <!-- Второй ряд -->
+  <circle cx="18" cy="38" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="26" cy="38" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="34" cy="38" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="42" cy="38" r="3.5" fill="#e74c3c" stroke="#c0392b" stroke-width="1"/>
+  
+  <!-- Третий ряд -->
+  <circle cx="18" cy="46" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="26" cy="46" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="34" cy="46" r="3.5" fill="url(#buttonGradient)" stroke="#34495e" stroke-width="1"/>
+  <circle cx="42" cy="46" r="3.5" fill="#e74c3c" stroke="#c0392b" stroke-width="1"/>
+  
+  <!-- Четвертый ряд (равно) -->
+  <rect x="16" y="50" width="20" height="4" rx="2" fill="#27ae60" stroke="#229954" stroke-width="1"/>
+  <circle cx="42" cy="52" r="3.5" fill="#e74c3c" stroke="#c0392b" stroke-width="1"/>
+  
+  <!-- Блеск на корпусе (для премиальности) -->
+  <path d="M12 8 L20 8 Q22 10 20 12 L12 12 Z" fill="#ffffff" opacity="0.2"/>
+</svg>
