@@ -1,0 +1,15 @@
+# robots.txt для kabinetbuhucheta.ru (v2)
+
+User-agent: *
+Allow: /
+
+Disallow: /data/
+Disallow: /includes/
+Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /*.htaccess$
+Disallow: /*.bak$
+Disallow: /*.lnk$
+Disallow: /router.php
+
+Sitemap: https://kabinetbuhucheta.ru/sitemap.xml

@@ -1,0 +1,47 @@
+{
+  "title": "Налоговый квиз",
+  "questions": [
+    {
+      "question": "Работаете ли вы с НДС?",
+      "options": [
+        { "text": "Да, работаю с НДС", "value": "with_vat" },
+        { "text": "Нет, без НДС", "value": "without_vat" },
+        { "text": "Не уверен(а)", "value": "unsure" }
+      ]
+    },
+    {
+      "question": "Какой у вас налоговый режим?",
+      "options": [
+        { "text": "УСН (доходы)", "value": "usn_income" },
+        { "text": "УСН (доходы минус расходы)", "value": "usn_income_expenses" },
+        { "text": "АУСН", "value": "ausn" },
+        { "text": "Не знаю", "value": "unknown" }
+      ]
+    },
+    {
+      "question": "Сколько сотрудников у вас работает?",
+      "options": [
+        { "text": "Нет сотрудников", "value": "0" },
+        { "text": "1-5 сотрудников", "value": "1-5" },
+        { "text": "6-15 сотрудников", "value": "6-15" },
+        { "text": "Более 15", "value": "15+" }
+      ]
+    },
+    {
+      "question": "Сдаёте ли вы отчёты вовремя?",
+      "options": [
+        { "text": "Всегда вовремя", "value": "always" },
+        { "text": "Иногда с опозданием", "value": "sometimes" },
+        { "text": "Часто опаздываю", "value": "often" }
+      ]
+    },
+    {
+      "question": "Хотите ли вы оптимизировать налоги?",
+      "options": [
+        { "text": "Да, хочу платить меньше", "value": "yes" },
+        { "text": "Нет, всё устраивает", "value": "no" },
+        { "text": "Не знаю, нужна консультация", "value": "consultation" }
+      ]
+    }
+  ]
+}

@@ -8,6 +8,9 @@
   # RewriteCond %{HTTP_HOST} ^www\.kabinetbuhucheta\.ru$ [NC]
   # RewriteRule ^(.*)$ https://kabinetbuhucheta.ru/$1 [L,R=301]
 
+  # Старый URL политики конфиденциальности
+  RewriteRule ^privacy\.html$ /politika-konfidentsialnosti/ [R=301,L]
+
   # Красивые URL: /path → /path/ если это каталог
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^(.+[^/])$ $1/ [R=301,L]

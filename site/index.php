@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/interactives.php';
 
 $page = [
     'title' => 'Кабинет Бухучёта — бухгалтерское сопровождение ИП и ООО на УСН',
@@ -11,6 +12,13 @@ $page = [
 ];
 
 require __DIR__ . '/includes/layout-start.php';
+
+$reviewsFile = __DIR__ . '/data/reviews.json';
+$reviewsData = json_decode((string) file_get_contents($reviewsFile), true);
+$homeReviews = [];
+if (is_array($reviewsData) && !empty($reviewsData['reviews'])) {
+    $homeReviews = array_slice($reviewsData['reviews'], 0, 3);
+}
 ?>
 
 <section class="hero">
@@ -92,7 +100,7 @@ require __DIR__ . '/includes/layout-start.php';
   <form method="dialog" class="multi-dialog__form" id="multi-org-form">
     <div class="multi-dialog__head">
       <h2 id="multi-dialog-title">Несколько организаций</h2>
-      <button value="cancel" class="multi-dialog__close" aria-label="Закрыть">&times;</button>
+      <button type="button" class="multi-dialog__close" id="multi-org-close" aria-label="Закрыть">&times;</button>
     </div>
 
     <div class="multi-step is-active" data-step="1">
@@ -164,6 +172,54 @@ require __DIR__ . '/includes/layout-start.php';
     </div>
   </div>
 </section>
+
+<section class="ix-home" aria-label="Полезные проверки">
+  <div class="container">
+    <details class="ix-disclosure">
+      <summary class="ix-disclosure__summary">
+        <span class="ix-disclosure__eyebrow">2 минуты</span>
+        <span class="ix-disclosure__title">Проверьте своего бухгалтера</span>
+        <span class="ix-disclosure__hint">6 пунктов — понять, всё ли в порядке с учётом</span>
+      </summary>
+      <div class="ix-disclosure__body">
+        <?php render_checklist(); ?>
+      </div>
+    </details>
+
+    <details class="ix-disclosure">
+      <summary class="ix-disclosure__summary">
+        <span class="ix-disclosure__eyebrow">5 вопросов</span>
+        <span class="ix-disclosure__title">Налоговый квиз</span>
+        <span class="ix-disclosure__hint">Есть ли смысл разбирать налоговую нагрузку</span>
+      </summary>
+      <div class="ix-disclosure__body">
+        <?php render_quiz(); ?>
+      </div>
+    </details>
+  </div>
+</section>
+
+<?php if ($homeReviews !== []): ?>
+<section class="reviews" id="reviews" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Нас рекомендуют</p>
+      <h2 id="reviews-title">Отзывы</h2>
+    </div>
+    <div class="reviews-grid">
+      <?php foreach ($homeReviews as $review): ?>
+        <article class="review-card">
+          <p class="review-card__author"><?= e((string) ($review['author'] ?? 'Клиент')) ?></p>
+          <p class="review-card__text"><?= e((string) ($review['text'] ?? '')) ?></p>
+        </article>
+      <?php endforeach; ?>
+    </div>
+    <p style="margin-top:1rem">
+      <a href="<?= e($siteContacts['yandex_uslugi']) ?>" target="_blank" rel="noopener noreferrer nofollow">Больше отзывов на Яндекс Услугах</a>
+    </p>
+  </div>
+</section>
+<?php endif; ?>
 
 <?php
 $ctaTitle = 'Разберём вашу ситуацию';

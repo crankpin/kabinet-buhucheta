@@ -12,6 +12,11 @@ declare(strict_types=1);
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/');
 $file = __DIR__ . $uri;
 
+if ($uri === '/privacy.html') {
+    header('Location: /politika-konfidentsialnosti/', true, 301);
+    return true;
+}
+
 if ($uri !== '/' && is_file($file)) {
     return false;
 }

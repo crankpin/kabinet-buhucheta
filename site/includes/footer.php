@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
 /** @var array<int, array{label:string,href:string}> $siteNav */
-/** @var array<int, array{label:string,href:string}> $siteRegions */
+/** @var array<int, array{label:string,href?:string}> $siteRegions */
 /** @var array<int, array{title:string,href:string,teaser:string}> $siteServices */
 /** @var array<string, string> $siteContacts */
 ?>
@@ -41,7 +41,16 @@ require_once __DIR__ . '/config.php';
       <h2 class="site-footer__title">География</h2>
       <ul class="site-footer__list">
         <?php foreach ($siteRegions as $region): ?>
-          <li><a href="<?= e(url($region['href'])) ?>"><?= e($region['label']) ?></a></li>
+          <?php
+            $regionHref = isset($region['href']) ? trim((string) $region['href']) : '';
+          ?>
+          <li>
+            <?php if ($regionHref !== ''): ?>
+              <a href="<?= e(url($regionHref)) ?>"><?= e($region['label']) ?></a>
+            <?php else: ?>
+              <?= e($region['label']) ?>
+            <?php endif; ?>
+          </li>
         <?php endforeach; ?>
       </ul>
     </div>
