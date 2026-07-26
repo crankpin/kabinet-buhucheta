@@ -11,7 +11,7 @@ $bodyClass = trim('page ' . (string) ($page['body_class'] ?? ''));
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1e3a4c">
+  <meta name="theme-color" content="#F1F3F4">
 <?php if (!empty($page['noindex'])): ?>
   <meta name="robots" content="noindex, nofollow">
 <?php else: ?>
@@ -38,6 +38,7 @@ $bodyClass = trim('page ' . (string) ($page['body_class'] ?? ''));
   <link rel="preload" href="<?= e(asset('fonts/Unbounded-Bold.woff2')) ?>" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="<?= e(asset('css/main.css')) ?>" as="style">
   <link rel="stylesheet" href="<?= e(asset('css/main.css')) ?>">
+  <link rel="stylesheet" href="<?= e(asset('css/nav-mega.css')) ?>">
 </head>
 <body class="<?= e($bodyClass) ?>">
   <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>

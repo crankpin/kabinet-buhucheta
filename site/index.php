@@ -9,6 +9,14 @@ $page = [
     'description' => 'Бухгалтерское сопровождение ИП и ООО на УСН. Налоговое консультирование. УСН, НДС, АУСН, переход с ПСН.',
     'canonical' => SITE_DOMAIN . '/',
     'body_class' => 'page-home',
+    'spine' => [
+        ['id' => 'nachalo', 'label' => 'К началу'],
+        ['id' => 'who-are-you', 'label' => 'Кто вы'],
+        ['id' => 'services', 'label' => 'Услуги'],
+        ['id' => 'tools', 'label' => 'Проверки'],
+        ['id' => 'reviews', 'label' => 'Отзывы'],
+        ['id' => 'kontakty', 'label' => 'Контакты'],
+    ],
 ];
 
 require __DIR__ . '/includes/layout-start.php';
@@ -21,7 +29,7 @@ if (is_array($reviewsData) && !empty($reviewsData['reviews'])) {
 }
 ?>
 
-<section class="hero">
+<section class="hero" id="nachalo">
   <div class="container hero__grid">
     <div class="hero__content">
       <p class="eyebrow">ИП Сизонова Карина Вадимовна</p>
@@ -155,7 +163,7 @@ if (is_array($reviewsData) && !empty($reviewsData['reviews'])) {
   </form>
 </dialog>
 
-<section class="services-teaser" aria-labelledby="services-teaser-title">
+<section class="services-teaser" id="services" aria-labelledby="services-teaser-title">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Услуги</p>
@@ -173,7 +181,7 @@ if (is_array($reviewsData) && !empty($reviewsData['reviews'])) {
   </div>
 </section>
 
-<section class="ix-home" aria-label="Полезные проверки">
+<section class="ix-home" id="tools" aria-label="Полезные проверки">
   <div class="container">
     <details class="ix-disclosure">
       <summary class="ix-disclosure__summary">
@@ -199,13 +207,13 @@ if (is_array($reviewsData) && !empty($reviewsData['reviews'])) {
   </div>
 </section>
 
-<?php if ($homeReviews !== []): ?>
 <section class="reviews" id="reviews" aria-labelledby="reviews-title">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Нас рекомендуют</p>
       <h2 id="reviews-title">Отзывы</h2>
     </div>
+    <?php if ($homeReviews !== []): ?>
     <div class="reviews-grid">
       <?php foreach ($homeReviews as $review): ?>
         <article class="review-card">
@@ -214,12 +222,12 @@ if (is_array($reviewsData) && !empty($reviewsData['reviews'])) {
         </article>
       <?php endforeach; ?>
     </div>
+    <?php endif; ?>
     <p style="margin-top:1rem">
       <a href="<?= e($siteContacts['yandex_uslugi']) ?>" target="_blank" rel="noopener noreferrer nofollow">Больше отзывов на Яндекс Услугах</a>
     </p>
   </div>
 </section>
-<?php endif; ?>
 
 <?php
 $ctaTitle = 'Разберём вашу ситуацию';

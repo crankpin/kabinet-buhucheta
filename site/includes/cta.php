@@ -7,7 +7,7 @@ require_once __DIR__ . '/config.php';
 $ctaTitle = $ctaTitle ?? 'Получить консультацию';
 $ctaText = $ctaText ?? 'Опишите ситуацию — разберём режим, риски и порядок работы.';
 ?>
-<section class="cta-band" aria-labelledby="cta-band-title">
+<section class="cta-band" id="kontakty" aria-labelledby="cta-band-title">
   <div class="container cta-band__inner">
     <div>
       <h2 id="cta-band-title" class="cta-band__title"><?= e($ctaTitle) ?></h2>

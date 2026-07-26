@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F5F2EC">
+  <title>Palette lab v1 — Кабинет Бухучёта</title>
+  <link rel="stylesheet" href="assets/palette-v1.css">
+</head>
+<body data-palette="warm-satin" data-cta="action">
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__blob ambient__blob--1"></div>
+    <div class="ambient__blob ambient__blob--2"></div>
+    <div class="ambient__blob ambient__blob--3"></div>
+    <div class="ambient__dust"></div>
+  </div>
+
+  <div class="page">
+    <div class="lab-bar" role="region" aria-label="Лаборатория палитр">
+      <div class="lab-bar__inner">
+        <span class="lab-bar__label">Palette</span>
+        <div class="lab-group" role="group" aria-label="Палитра">
+          <button type="button" class="lab-btn" data-palette-set="warm-satin">Warm Satin</button>
+          <button type="button" class="lab-btn" data-palette-set="mineral-finance">Mineral Finance</button>
+          <button type="button" class="lab-btn" data-palette-set="editorial-contrast">Editorial Contrast</button>
+        </div>
+
+        <span class="lab-bar__label">Motion</span>
+        <div class="lab-group" role="group" aria-label="Движение фона">
+          <button type="button" class="lab-btn" data-motion-set="on">ON</button>
+          <button type="button" class="lab-btn" data-motion-set="off">OFF</button>
+        </div>
+
+        <span class="lab-bar__label">Mega</span>
+        <div class="lab-group" role="group" aria-label="Mega-menu">
+          <button type="button" class="lab-btn" data-mega-set="open">OPEN</button>
+          <button type="button" class="lab-btn" data-mega-set="closed">CLOSED</button>
+        </div>
+
+        <span class="lab-bar__label">CTA</span>
+        <div class="lab-group" role="group" aria-label="Цвет CTA">
+          <button type="button" class="lab-btn" data-cta-set="action">ink/action</button>
+          <button type="button" class="lab-btn" data-cta-set="warm">warm/медь</button>
+        </div>
+
+        <span class="lab-note">Не трогает /site · победителя не выбираем</span>
+      </div>
+    </div>
+
+    <header class="site-header" id="site-header">
+      <div class="site-header__bar">
+        <div class="site-header__inner">
+          <a class="site-logo" href="#" aria-label="Кабинет Бухучёта — на главную">
+            <img
+              class="site-logo__img"
+              src="../../site/assets/images/logo.svg"
+              alt=""
+              width="44"
+              height="44"
+            >
+            <span class="site-logo__name">Кабинет Бухучёта</span>
+          </a>
+
+          <nav class="site-header__nav" aria-label="Разделы сайта">
+            <a class="site-header__home" href="#" aria-label="На главную">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="site-header__item is-current" href="#" data-mega-hover="services" aria-expanded="false" aria-controls="mega-panel" aria-current="page">Услуги</a>
+            <a class="site-header__item" href="#" data-mega-hover="tools" aria-expanded="false" aria-controls="mega-panel">Проверки</a>
+            <a class="site-header__item" href="#" data-mega-hover="materials" aria-expanded="false" aria-controls="mega-panel">Материалы</a>
+            <button type="button" class="site-header__item site-header__item--action" data-mega-hover="contacts" aria-expanded="false" aria-controls="mega-panel">Контакты</button>
+          </nav>
+
+          <div class="site-header__search">
+            <label class="sr-only" for="header-search">Поиск по темам</label>
+            <input class="site-header__search-field" id="header-search" type="search" placeholder="Найти…" autocomplete="off">
+          </div>
+
+          <div class="site-header__actions">
+            <a class="site-header__cta" href="#form">Консультация</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mega" id="mega-panel">
+        <div class="mega__clip">
+          <div class="mega__inner">
+            <p class="mega__title">Услуги</p>
+            <p class="mega__lede">Сопровождение ИП и ООО на УСН — без серых схем</p>
+            <div class="mega__stage">
+              <div class="mega__stickers mega__stickers--left">
+                <a class="mega__sticker mega__sticker--left" href="#services" style="--sticker-rot: -4deg">
+                  <span
+                    class="mega__sticker-img"
+                    style="background-image:url(../../site/assets/images/karina-hero.webp);background-position:30% 20%"
+                  ></span>
+                  <span class="mega__sticker-cap">ИП на УСН</span>
+                </a>
+              </div>
+              <div class="mega__links">
+                <a href="#services">Сопровождение ИП</a>
+                <a href="#services">Сопровождение ООО на УСН</a>
+                <a href="#services">Налоговое консультирование</a>
+                <a href="#services">Все услуги</a>
+              </div>
+              <div class="mega__stickers mega__stickers--right">
+                <a class="mega__sticker mega__sticker--right" href="#services" style="--sticker-rot: 3deg">
+                  <span
+                    class="mega__sticker-img"
+                    style="background-image:url(../../site/assets/images/karina-hero.webp);background-position:70% 25%"
+                  ></span>
+                  <span class="mega__sticker-cap">ООО / УСН</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__content">
+            <p class="eyebrow">ИП Сизонова Карина Вадимовна</p>
+            <h1 class="hero__title">
+              Бухгалтерское<br>
+              сопровождение<br>
+              <span>ИП и ООО на УСН</span>
+            </h1>
+            <p class="hero__lead">
+              Дипломированный налоговый консультант. Веду учёт, отчётность и налоги —
+              без серых схем, понятным языком.
+            </p>
+            <ul class="hero__tags" aria-label="Ключевые режимы">
+              <li>УСН</li>
+              <li>УСН с НДС</li>
+              <li>АУСН</li>
+              <li>Переход с ПСН</li>
+            </ul>
+            <div class="hero__actions">
+              <a class="btn btn--accent" href="#form">Получить консультацию</a>
+              <a class="btn btn--ghost" href="#trust">О Карине</a>
+            </div>
+          </div>
+          <div class="hero__portrait">
+            <figure class="hero__figure">
+              <img
+                class="hero__photo"
+                src="../../site/assets/images/karina-hero.webp"
+                alt="Карина Сизонова — бухгалтер и налоговый консультант"
+                width="400"
+                height="600"
+              >
+              <div class="hero__badge">
+                <strong>Квалификация</strong>
+                Налоговый консультант
+              </div>
+              <figcaption class="hero__caption">Карина Сизонова</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="container">
+          <p class="eyebrow">Услуги</p>
+          <h2 class="section-title">Три опоры кабинета</h2>
+          <p class="section-lead">Бескаркасная поверхность и тонкая рамка — оба варианта на одной сетке.</p>
+          <div class="services-grid">
+            <a class="service service--bare is-selected" href="#" aria-current="true">
+              <span class="service__num">01</span>
+              <h3 class="service__title">Сопровождение ИП</h3>
+              <p class="service__text">Учёт, отчётность и налоги для ИП на УСН — в рабочем ритме.</p>
+              <span class="service__more">Подробнее</span>
+            </a>
+            <a class="service service--framed" href="#">
+              <span class="service__num">02</span>
+              <h3 class="service__title">Сопровождение ООО на УСН</h3>
+              <p class="service__text">Порядок в документах и налогах без лишней «банковской» холодности.</p>
+              <span class="service__more">Подробнее</span>
+            </a>
+            <a class="service service--framed" href="#">
+              <span class="service__num">03</span>
+              <h3 class="service__title">Налоговое консультирование</h3>
+              <p class="service__text">Режим, переход, спорный вопрос — разберём по шагам.</p>
+              <span class="service__more">Подробнее</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section trust" id="trust">
+        <div class="container trust__grid">
+          <div>
+            <p class="eyebrow">Доверие</p>
+            <h2 class="section-title">Карина Сизонова</h2>
+            <p class="trust__text">
+              Дипломированный налоговый консультант. Веду кабинет как личную практику:
+              спокойно, предметно, без серых схем.
+            </p>
+            <div class="trust__stats">
+              <div class="trust__stat">
+                <strong>НК</strong>
+                <span>квалификация</span>
+              </div>
+              <div class="trust__stat">
+                <strong>10+</strong>
+                <span>лет практики</span>
+              </div>
+              <div class="trust__stat">
+                <strong>УСН</strong>
+                <span>специализация</span>
+              </div>
+            </div>
+            <a class="btn btn--soft" href="#">О Карине</a>
+          </div>
+          <figure class="trust__portrait">
+            <img
+              src="../../site/assets/images/karina-hero.webp"
+              alt=""
+              width="280"
+              height="360"
+            >
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" id="tools">
+        <div class="container">
+          <p class="eyebrow">Интерактив</p>
+          <h2 class="section-title">Самопроверка учёта</h2>
+          <p class="section-lead">Фрагмент для проверки selected / focus / success / error.</p>
+          <div class="ix">
+            <div class="ix__progress" aria-hidden="true">
+              <span class="ix__dot is-done"></span>
+              <span class="ix__dot is-current"></span>
+              <span class="ix__dot"></span>
+            </div>
+            <p class="ix__q">Какой у вас налоговый режим?</p>
+            <div class="ix-options" role="group" aria-label="Варианты ответа">
+              <button type="button" class="ix-option is-selected" aria-pressed="true">УСН «доходы»</button>
+              <button type="button" class="ix-option" aria-pressed="false">УСН «доходы минус расходы»</button>
+              <button type="button" class="ix-option is-ok" aria-pressed="false">АУСН</button>
+              <button type="button" class="ix-option is-error" aria-pressed="false">Не знаю / ПСН</button>
+            </div>
+            <p class="ix__hint ix__hint--ok">Успех: режим определён — можно идти к услуге.</p>
+            <p class="ix__hint ix__hint--err">Ошибка: нужно уточнить режим, прежде чем считать налог.</p>
+            <button type="button" class="btn btn--accent">Дальше</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <div class="container">
+          <p class="eyebrow">Отзывы</p>
+          <h2 class="section-title">Как на сайте сейчас</h2>
+          <p class="section-lead">Production использует review-card, не orbs.</p>
+          <div class="reviews-grid">
+            <article class="review-card">
+              <p class="review-card__author">Анна, ИП</p>
+              <p class="review-card__text">Спокойно закрыли квартал и объяснили УСН с НДС без паники.</p>
+            </article>
+            <article class="review-card">
+              <p class="review-card__author">Игорь, ООО</p>
+              <p class="review-card__text">Наконец порядок в документах — без «банковского» тона и лишних созвонов.</p>
+            </article>
+            <article class="review-card">
+              <p class="review-card__author">Марина, ИП</p>
+              <p class="review-card__text">Помогли с переходом с патента: что платить и когда — по пунктам.</p>
+            </article>
+          </div>
+
+          <p class="orbs-note">Наследие: мини-блок review orbs (не production-default)</p>
+          <div class="orbs" aria-hidden="true">
+            <div class="orb">А</div>
+            <div class="orb orb--warm">И</div>
+            <div class="orb orb--violet">М</div>
+            <div class="orb orb--gold">К</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dark-pause">
+        <div class="container">
+          <p class="eyebrow" style="color: color-mix(in srgb, var(--color-text-inverse) 65%, transparent)">Пауза</p>
+          <h2 class="section-title">Разберём режим. Настроим учёт.</h2>
+          <p class="section-lead">Тёмная секция для проверки inverse text и тёплого CTA на ink.</p>
+          <div class="hero__actions">
+            <a class="btn btn--accent" href="#form">Написать</a>
+            <a class="btn btn--ghost" href="#services">К услугам</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="form">
+        <div class="container">
+          <p class="eyebrow">Форма</p>
+          <h2 class="section-title">Короткий запрос</h2>
+          <p class="section-lead">Поля, focus ring и состояние ошибки.</p>
+          <form class="form-grid" action="#" method="get" onsubmit="return false">
+            <div class="field">
+              <label for="name">Имя</label>
+              <input id="name" name="name" type="text" value="Карина" autocomplete="name">
+            </div>
+            <div class="field field--error">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" value="не-email" autocomplete="email">
+              <p class="field__msg">Проверьте адрес — так письмо не уйдёт.</p>
+            </div>
+            <div class="field">
+              <label for="msg">Вопрос</label>
+              <textarea id="msg" name="msg" rows="3">Нужна консультация по УСН с НДС</textarea>
+            </div>
+            <button type="submit" class="btn btn--accent">Отправить</button>
+          </form>
+
+          <h3 class="section-title" style="font-size:1.1rem;margin-top:2.5rem">Токены текущей палитры</h3>
+          <div class="swatches" id="swatches">
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-page)"></div><div class="swatch__meta"><strong>page</strong>фон</div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-surface)"></div><div class="swatch__meta"><strong>surface</strong></div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-primary)"></div><div class="swatch__meta"><strong>primary</strong></div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-warm)"></div><div class="swatch__meta"><strong>warm</strong></div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-violet)"></div><div class="swatch__meta"><strong>violet</strong></div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-gold)"></div><div class="swatch__meta"><strong>gold</strong></div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-ink)"></div><div class="swatch__meta"><strong>ink</strong></div></div>
+            <div class="swatch"><div class="swatch__chip" style="background:var(--color-action)"></div><div class="swatch__meta"><strong>action CTA</strong></div></div>
+          </div>
+
+          <table class="contrast-table">
+            <thead>
+              <tr>
+                <th>Пара</th>
+                <th>Warm Satin</th>
+                <th>Mineral</th>
+                <th>Editorial</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>text / page</td>
+                <td>#24272B on #F5F2EC ≈ 14.5:1</td>
+                <td>#25303A on #F1F3F4 ≈ 12.8:1</td>
+                <td>#25272A on #F4F0E8 ≈ 14.2:1</td>
+              </tr>
+              <tr>
+                <td>muted / page</td>
+                <td>#5E636A ≈ 5.6:1</td>
+                <td>#62707C ≈ 4.9:1</td>
+                <td>#626267 ≈ 5.3:1</td>
+              </tr>
+              <tr>
+                <td>inverse / primary CTA</td>
+                <td>#F5F2EC on #384A60 ≈ 7.8:1</td>
+                <td>#F1F3F4 on #31475B ≈ 8.4:1</td>
+                <td>#F4F0E8 on #303236 ≈ 11.2:1</td>
+              </tr>
+              <tr>
+                <td>inverse / warm CTA</td>
+                <td>#F5F2EC on #C78972 ≈ 3.3:1*</td>
+                <td>#F1F3F4 on #C09376 ≈ 3.1:1*</td>
+                <td>#F4F0E8 on #A96F5E ≈ 3.9:1*</td>
+              </tr>
+              <tr>
+                <td>Характер</td>
+                <td>тёплый кабинет, сатин</td>
+                <td>ближе к cool production</td>
+                <td>editorial + ink pause</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="section-lead" style="margin-top:0.75rem">
+            * Warm CTA на светлом тексте — на грани AA для мелкого текста; для кнопок крупного
+            display-шрифта приемлемо, либо CTA остаётся ink/action.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-lab">
+      <div class="container">
+        <p>prototypes/palette-v1 — изолированная лаборатория. Production (/site) не меняется.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/palette-v1.js"></script>
+</body>
+</html>

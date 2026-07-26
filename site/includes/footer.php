@@ -95,5 +95,6 @@ require_once __DIR__ . '/config.php';
 <div class="contact-panel-overlay" id="contact-panel-overlay" hidden></div>
 
 <script src="<?= e(asset('js/main.js')) ?>" defer></script>
+<script src="<?= e(asset('js/nav-mega.js')) ?>" defer></script>
 </body>
 </html>

@@ -6,6 +6,14 @@
   var toggle = document.getElementById("nav-toggle");
   var closeBtn = document.getElementById("nav-close");
   var overlay = document.getElementById("nav-overlay");
+
+  /* New mega header owns mobile sheet via nav-mega.js */
+  if (document.querySelector(".site-header--mega")) {
+    nav = null;
+    toggle = null;
+    closeBtn = null;
+    overlay = null;
+  }
   var scrollY = 0;
   var lastFocused = null;
 
