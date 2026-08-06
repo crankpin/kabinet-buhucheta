@@ -15,9 +15,34 @@
   var savedY = 0;
   var closeTimer = null;
   var closeGen = 0;
+  var mobileOpenTrigger = null;
+  var desktopNavMq =
+    typeof window.matchMedia === "function"
+      ? window.matchMedia("(min-width: 1101px)")
+      : null;
   var reducedMotion =
     typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function getFocusable(container) {
+    if (!container) return [];
+    return Array.prototype.slice
+      .call(
+        container.querySelectorAll(
+          'a[href], button:not([disabled]), textarea, input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      )
+      .filter(function (el) {
+        return !el.hasAttribute("hidden") && el.getAttribute("aria-hidden") !== "true";
+      });
+  }
+
+  function setBackgroundInert(inertOn) {
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el === poster || el === overlay) return;
+      if ("inert" in el) el.inert = inertOn;
+    });
+  }
 
   function setExpanded(id) {
     header.querySelectorAll("[data-mega-hover]").forEach(function (el) {
@@ -236,6 +261,7 @@
     closeGen += 1;
     clearTimeout(closeTimer);
     savedY = window.scrollY || 0;
+    mobileOpenTrigger = document.activeElement;
     mobileOpen = true;
     document.body.classList.add("nav-open");
     document.body.style.top = "-" + savedY + "px";
@@ -249,6 +275,16 @@
     void poster.offsetWidth;
     poster.classList.add("is-open");
     poster.setAttribute("aria-hidden", "false");
+    /* `inert` (unlike the CSS `visibility` transition) applies synchronously,
+       so the panel is genuinely focusable right away. */
+    poster.inert = false;
+    setBackgroundInert(true);
+    if (closeBtn) {
+      closeBtn.focus();
+    } else {
+      var focusables = getFocusable(poster);
+      if (focusables.length) focusables[0].focus();
+    }
   }
 
   function closeMobile() {
@@ -259,8 +295,18 @@
     clearTimeout(closeTimer);
     poster.classList.remove("is-open");
     poster.setAttribute("aria-hidden", "true");
+    poster.inert = true;
     if (toggle) toggle.setAttribute("aria-expanded", "false");
     if (overlay) overlay.classList.remove("is-visible");
+    setBackgroundInert(false);
+
+    var trigger = mobileOpenTrigger;
+    mobileOpenTrigger = null;
+    if (trigger && typeof trigger.focus === "function") {
+      trigger.focus();
+    } else if (toggle) {
+      toggle.focus();
+    }
 
     if (reducedMotion) {
       finishCloseMobile(gen);
@@ -292,6 +338,36 @@
   }
   if (closeBtn) closeBtn.addEventListener("click", closeMobile);
   if (overlay) overlay.addEventListener("click", closeMobile);
+
+  if (poster) {
+    poster.addEventListener("keydown", function (event) {
+      if (event.key !== "Tab" || !poster.classList.contains("is-open")) return;
+      var focusables = getFocusable(poster);
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  }
+
+  if (desktopNavMq) {
+    var onDesktopNavChange = function (e) {
+      if (e.matches && (mobileOpen || (poster && poster.classList.contains("is-open")))) {
+        closeMobile();
+      }
+    };
+    if (typeof desktopNavMq.addEventListener === "function") {
+      desktopNavMq.addEventListener("change", onDesktopNavChange);
+    } else if (typeof desktopNavMq.addListener === "function") {
+      desktopNavMq.addListener(onDesktopNavChange);
+    }
+  }
 
   poster &&
     poster.querySelectorAll(".poster-acc__toggle").forEach(function (btn) {
@@ -331,15 +407,32 @@
       a.addEventListener("click", closeMobile);
     });
 
-  /* Page spine scroll progress */
-  function updatePageSpine() {
+  /* Page spine scroll progress — Raw Materials nav-bar concept
+     (https://www.therawmaterials.com/approach): each sector's height grows
+     continuously through its own section's ENTIRE scroll, peaking exactly
+     when that section's middle lines up with the screen's middle — not a
+     binary "active section snaps to tall" switch. Every sector gets its own
+     `--sector-progress` every frame, so the growth reads as a wave passing
+     through the list rather than a single pill jumping between sizes.
+
+     Two fixes are kept from the earlier throttled version:
+     1. rAF-throttled: the raw `scroll` event fires far more often than the
+        display paints; without throttling, every event did a full DOM read
+        (getBoundingClientRect for every section) plus a style write.
+     2. Hysteresis on the discrete `is-active` (color/border) pick only —
+        the continuous height itself needs no hysteresis since it's already
+        smooth, but which single pill is "current" for a11y/color still
+        benefits from not flickering right on a section boundary. */
+  var spineActiveId = null;
+  var spineTicking = false;
+
+  function computePageSpine() {
     var sectors = document.querySelectorAll(".page-spine .spine-sector[data-nav]");
     if (!sectors.length) return;
 
     var mid = window.innerHeight * 0.42;
-    var readLine = window.innerHeight * 0.28;
-    var bestId = null;
-    var bestDist = Infinity;
+    var spread = window.innerHeight * 0.6;
+    var candidates = [];
     var progressMap = {};
 
     sectors.forEach(function (sector) {
@@ -349,34 +442,54 @@
       var rect = section.getBoundingClientRect();
       var center = rect.top + rect.height / 2;
       var dist = Math.abs(center - mid);
-      if (rect.bottom > 80 && rect.top < window.innerHeight - 40 && dist < bestDist) {
-        bestDist = dist;
-        bestId = id;
+      progressMap[id] = Math.max(0, 1 - dist / spread);
+      if (rect.bottom > 80 && rect.top < window.innerHeight - 40) {
+        candidates.push({ id: id, dist: dist });
       }
-      var scrolled =
-        rect.height > 0
-          ? Math.max(0, Math.min(1, (readLine - rect.top) / rect.height))
-          : 0;
-      progressMap[id] = scrolled;
     });
 
+    candidates.sort(function (a, b) {
+      return a.dist - b.dist;
+    });
+    var top = candidates[0];
+    var bestId = top ? top.id : null;
+
+    var HYSTERESIS = window.innerHeight * 0.06;
+    if (spineActiveId && top) {
+      var current = candidates.filter(function (c) {
+        return c.id === spineActiveId;
+      })[0];
+      if (current && current.dist - top.dist < HYSTERESIS) {
+        bestId = spineActiveId;
+      }
+    }
+
     if (!bestId && sectors[0]) bestId = sectors[0].getAttribute("data-nav");
+    spineActiveId = bestId;
 
     sectors.forEach(function (sector) {
       var id = sector.getAttribute("data-nav");
       var active = id === bestId;
-      var progress = 0;
-      if (active) progress = Math.max(0.12, progressMap[id] || 0);
       sector.classList.toggle("is-active", active);
       if (active) sector.setAttribute("aria-current", "true");
       else sector.removeAttribute("aria-current");
+      var progress = progressMap[id] || 0;
       sector.style.setProperty("--sector-progress", String(Math.round(progress * 1000) / 1000));
     });
   }
 
+  function requestPageSpineUpdate() {
+    if (spineTicking) return;
+    spineTicking = true;
+    window.requestAnimationFrame(function () {
+      spineTicking = false;
+      computePageSpine();
+    });
+  }
+
   if (document.querySelector(".page-spine .spine-sector[data-nav]")) {
-    updatePageSpine();
-    window.addEventListener("scroll", updatePageSpine, { passive: true });
-    window.addEventListener("resize", updatePageSpine);
+    computePageSpine();
+    window.addEventListener("scroll", requestPageSpineUpdate, { passive: true });
+    window.addEventListener("resize", requestPageSpineUpdate);
   }
 })();

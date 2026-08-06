@@ -72,9 +72,9 @@ require_once __DIR__ . '/config.php';
   <img src="<?= e(asset('images/mandarin.png')) ?>" alt="" width="56" height="56" decoding="async">
 </button>
 
-<div class="contact-panel" id="contact-panel" hidden>
+<div class="contact-panel" id="contact-panel" role="dialog" aria-modal="true" aria-labelledby="contact-panel-title" hidden inert>
   <div class="contact-panel__header">
-    <h2>Связаться</h2>
+    <h2 id="contact-panel-title">Связаться</h2>
     <button type="button" class="contact-panel__close" id="contact-panel-close" aria-label="Закрыть">&times;</button>
   </div>
   <div class="contact-panel__list">
@@ -96,5 +96,65 @@ require_once __DIR__ . '/config.php';
 
 <script src="<?= e(asset('js/main.js')) ?>" defer></script>
 <script src="<?= e(asset('js/nav-mega.js')) ?>" defer></script>
+<?php if (!empty($page['scroll_stack'])): ?>
+<script>
+/* Decorative desktop-only scroll effect: fetch GSAP + its assets only when
+   the viewport is actually desktop-sized and motion is not reduced, so
+   phones never pay for CSS/JS they will never render. */
+(function () {
+  var desktopMq = window.matchMedia('(min-width: 1025px)');
+  var reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var loaded = false;
+
+  function canRun() {
+    return desktopMq.matches && !reduceMq.matches;
+  }
+
+  function loadScript(src) {
+    return new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function () { resolve(true); };
+      s.onerror = function () { resolve(false); };
+      document.body.appendChild(s);
+    });
+  }
+
+  function loadScrollStack() {
+    if (loaded || !canRun()) return;
+    loaded = true;
+
+    try {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = <?= json_encode(asset('css/scroll-stack-bg.css'), JSON_UNESCAPED_SLASHES) ?>;
+      document.head.appendChild(link);
+
+      loadScript(<?= json_encode(asset('js/vendor/gsap.min.js'), JSON_UNESCAPED_SLASHES) ?>)
+        .then(function (ok) {
+          return ok ? loadScript(<?= json_encode(asset('js/vendor/ScrollTrigger.min.js'), JSON_UNESCAPED_SLASHES) ?>) : false;
+        })
+        .then(function (ok) {
+          return ok ? loadScript(<?= json_encode(asset('js/scroll-stack-bg.js'), JSON_UNESCAPED_SLASHES) ?>) : false;
+        })
+        .catch(function () { /* decorative effect only — never break the page */ });
+    } catch (err) { /* decorative effect only — never break the page */ }
+  }
+
+  loadScrollStack();
+
+  if (typeof desktopMq.addEventListener === 'function') {
+    desktopMq.addEventListener('change', loadScrollStack);
+  } else if (typeof desktopMq.addListener === 'function') {
+    desktopMq.addListener(loadScrollStack);
+  }
+  if (typeof reduceMq.addEventListener === 'function') {
+    reduceMq.addEventListener('change', loadScrollStack);
+  } else if (typeof reduceMq.addListener === 'function') {
+    reduceMq.addListener(loadScrollStack);
+  }
+})();
+</script>
+<?php endif; ?>
 </body>
 </html>

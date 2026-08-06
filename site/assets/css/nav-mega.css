@@ -21,9 +21,38 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg) 88%, var(--white));
-  border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(12px);
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--bg) 28%, transparent) 8%,
+      color-mix(in srgb, var(--bg) 40%, transparent) 50%,
+      color-mix(in srgb, var(--bg) 28%, transparent) 92%,
+      transparent 100%
+    );
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    backdrop-filter 0.28s ease;
+}
+
+.site-header--mega.is-scrolled,
+.site-header--mega.is-mega-open {
+  background: color-mix(in srgb, var(--bg) 82%, var(--white));
+  border-bottom-color: var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@media (max-width: 1100px) {
+  /* Mobile sheet needs a readable bar even at rest */
+  .site-header--mega {
+    background: color-mix(in srgb, var(--bg) 72%, var(--white));
+    border-bottom-color: color-mix(in srgb, var(--line) 70%, transparent);
+  }
 }
 
 .site-header--mega .site-header__bar {
@@ -215,7 +244,7 @@
   display: none;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 1101px) {
   .site-header--mega .nav-toggle { display: none; }
   .site-header--mega .site-header__nav,
   .site-header--mega .site-header__search,
@@ -383,7 +412,7 @@
   border-color: transparent;
 }
 
-@media (max-width: 1100px) and (min-width: 961px) {
+@media (max-width: 1279px) and (min-width: 1101px) {
   .mega__stage {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -576,12 +605,20 @@
   display: grid;
   place-items: center;
   min-height: 48px;
+  padding: 0.55rem 0.75rem;
   border-radius: 999px;
   background: var(--accent);
   color: var(--white);
   text-decoration: none;
   font-family: var(--font-display);
   font-weight: 700;
+  font-size: clamp(0.72rem, 3.4vw, 0.88rem);
+  text-align: center;
+  line-height: 1.25;
+  max-width: 100%;
+}
+.poster-acc__item--leaf .poster-acc__page {
+  padding-right: 0.95rem;
 }
 .site-nav-mobile .channels {
   display: flex;
@@ -637,14 +674,14 @@
   }
 }
 
-@media (min-width: 961px) {
+@media (min-width: 1101px) {
   .site-nav-mobile.poster { display: none !important; }
 }
 
-/* ——— Page shell + spine ——— */
+/* ——— Page shell + spine (left, seamless: section surfaces bleed under gutter) ——— */
 .page-shell--spine {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--spine-w);
+  grid-template-columns: var(--spine-w) minmax(0, 1fr);
   align-items: start;
   width: min(100%, calc(1280px + var(--spine-w)));
   margin-inline: auto;
@@ -652,6 +689,10 @@
 
 .page-shell--spine .page-content {
   min-width: 0;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  padding-left: var(--spine-w);
+  box-sizing: border-box;
 }
 
 .page-spine {
@@ -662,9 +703,14 @@
   z-index: 40;
   display: none;
   flex-direction: column;
+  width: var(--spine-w);
+  max-width: var(--spine-w);
   padding: 0.85rem 0.7rem 1rem;
   background: transparent;
   align-self: start;
+  justify-self: start;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .page-spine .nav-kicker {
@@ -683,11 +729,19 @@
   gap: 0.45rem;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
-  padding-right: 0.15rem;
+  /* visible X: overflow:hidden was clipping sector borders/sides */
+  overflow-x: visible;
+  overflow-y: auto;
+  padding-inline: 0.1rem;
 }
 
 .spine-sector {
+  /* `--sector-progress` is continuous per sector (0 to 1, peaks when the
+     section's own middle lines up with the screen's middle — Raw Materials
+     nav-bar concept), not a binary active/inactive switch. Height is the
+     animated property on purpose (this is what reads as "alive" here);
+     the scroll handler rAF-throttles the recalculation so it only costs
+     one reflow per frame, not one per scroll event. */
   --sector-progress: 0;
   --sector-h-min: 4.5rem;
   --sector-h-max: calc(var(--sector-h-min) * 2.16);
@@ -744,11 +798,22 @@
   text-align: center;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 1101px) {
   .page-spine { display: flex; }
-  body:has(.page-spine) .contact-fab,
-  body:has(.page-spine) .contact-panel {
-    right: calc(var(--spine-w) + 1.25rem);
+
+  /* Section backgrounds paint under the transparent spine gutter */
+  .page-shell--spine .page-content > * {
+    margin-left: calc(-1 * var(--spine-w));
+    width: calc(100% + var(--spine-w));
+    max-width: none;
+    padding-left: var(--spine-w);
+    box-sizing: border-box;
+  }
+
+  /* Full desktop nav: no hidden horizontal scroll */
+  .site-header--mega .site-header__nav {
+    overflow-x: visible;
+    flex-wrap: wrap;
   }
 }
 
@@ -761,18 +826,42 @@
   .spine-sector__label { font-size: 0.95rem; }
 }
 
-@media (max-width: 1279px) and (min-width: 961px) {
+@media (max-width: 1279px) and (min-width: 1101px) {
   :root { --spine-w: 148px; }
   .spine-sector {
     --sector-h-min: 3.85rem;
     padding: 0.55rem 0.45rem;
   }
   .spine-sector__label { font-size: 0.78rem; }
+
+  .site-header--mega .site-header__item {
+    padding-inline: 0.45rem;
+    font-size: 0.82rem;
+  }
+
+  .site-header--mega .site-logo__name {
+    font-size: 0.7rem;
+  }
+
+  .site-header--mega .site-header__search {
+    flex-basis: 8rem;
+    min-width: 6.5rem;
+    max-width: 12rem;
+  }
+
+  .site-header--mega .site-header__cta {
+    padding-inline: 0.55rem;
+    font-size: 0.6rem;
+  }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
   .page-shell--spine {
     display: block;
     width: 100%;
+  }
+
+  .page-shell--spine .page-content {
+    padding-left: 0;
   }
 }

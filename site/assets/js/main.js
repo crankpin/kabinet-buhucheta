@@ -29,7 +29,7 @@
   }
 
   function isMobileNav() {
-    return typeof window.matchMedia === "function" && window.matchMedia("(max-width: 960px)").matches;
+    return typeof window.matchMedia === "function" && window.matchMedia("(max-width: 1100px)").matches;
   }
 
   function setNavHiddenState(open) {
@@ -149,116 +149,143 @@
   var panel = document.getElementById("contact-panel");
   var panelClose = document.getElementById("contact-panel-close");
   var panelOverlay = document.getElementById("contact-panel-overlay");
+  var panelLastTrigger = null;
 
-  function setPanel(open) {
+  function setPanelBackgroundInert(inertOn) {
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el === panel || el === panelOverlay) return;
+      if ("inert" in el) el.inert = inertOn;
+    });
+  }
+
+  function setPanel(open, trigger) {
     if (!panel || !fab) return;
     fab.setAttribute("aria-expanded", open ? "true" : "false");
     if (open) {
+      if (trigger) panelLastTrigger = trigger;
       panel.removeAttribute("hidden");
+      panel.inert = false;
+      setPanelBackgroundInert(true);
       if (panelOverlay) panelOverlay.removeAttribute("hidden");
+      var focusables = getFocusable(panel);
+      if (focusables.length) focusables[0].focus();
     } else {
       panel.setAttribute("hidden", "");
+      panel.inert = true;
+      setPanelBackgroundInert(false);
       if (panelOverlay) panelOverlay.setAttribute("hidden", "");
+      if (panelLastTrigger && typeof panelLastTrigger.focus === "function") {
+        panelLastTrigger.focus();
+      }
+      panelLastTrigger = null;
     }
   }
 
   if (fab) {
     fab.addEventListener("click", function () {
+      if (fab.classList.contains("is-deferred")) return;
       var open = fab.getAttribute("aria-expanded") === "true";
-      setPanel(!open);
+      setPanel(!open, fab);
     });
   }
   if (panelClose) panelClose.addEventListener("click", function () { setPanel(false); });
   if (panelOverlay) panelOverlay.addEventListener("click", function () { setPanel(false); });
-
-  var multiOpen = document.getElementById("multi-org-open");
-  var multiDialog = document.getElementById("multi-org-panel");
-  var multiForm = document.getElementById("multi-org-form");
-  var multiClose = document.getElementById("multi-org-close");
-
-  function showStep(step) {
-    if (!multiForm) return;
-    var steps = multiForm.querySelectorAll(".multi-step");
-    steps.forEach(function (el) {
-      var match = String(el.getAttribute("data-step")) === String(step);
-      el.hidden = !match;
-      el.classList.toggle("is-active", match);
+  if (panel) {
+    panel.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        setPanel(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      var focusables = getFocusable(panel);
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
   }
 
-  function closeMultiDialog() {
-    if (!multiDialog) return;
-    if (typeof multiDialog.close === "function" && multiDialog.open) {
-      multiDialog.close();
-    } else {
-      multiDialog.removeAttribute("open");
-    }
-    if (multiOpen) {
-      multiOpen.setAttribute("aria-expanded", "false");
-      multiOpen.focus();
-    }
-  }
+  document.querySelectorAll("[data-contact-panel-open]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      setPanel(true, btn);
+    });
+  });
 
-  if (multiOpen && multiDialog) {
-    multiOpen.addEventListener("click", function () {
-      multiOpen.setAttribute("aria-expanded", "true");
-      if (typeof multiDialog.showModal === "function") {
-        multiDialog.showModal();
+  /* Mobile: defer mandarin FAB while primary hero CTA is in view */
+  (function initFabHeroDeferral() {
+    if (!fab) return;
+    var heroCta = document.querySelector(".hero__actions .btn--accent, .hero__actions .btn, .hero__actions [data-contact-panel-open]");
+    if (!heroCta) return;
+
+    var mobileMq =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(max-width: 1100px)")
+        : null;
+    var heroInView = false;
+    var observer = null;
+
+    function applyFabDeferral() {
+      var defer = !!(mobileMq && mobileMq.matches && heroInView);
+      fab.classList.toggle("is-deferred", defer);
+      fab.setAttribute("aria-hidden", defer ? "true" : "false");
+      if (defer) {
+        fab.setAttribute("tabindex", "-1");
+        setPanel(false);
       } else {
-        multiDialog.setAttribute("open", "");
+        fab.removeAttribute("tabindex");
       }
-      showStep(1);
-    });
+    }
 
-    multiDialog.addEventListener("close", function () {
-      if (multiOpen) multiOpen.setAttribute("aria-expanded", "false");
-      showStep(1);
-      if (multiForm) multiForm.reset();
-    });
+    function setHeroInView(next) {
+      heroInView = !!next;
+      applyFabDeferral();
+    }
 
-    multiDialog.addEventListener("click", function (event) {
-      if (event.target === multiDialog) {
-        closeMultiDialog();
+    function bindObserver() {
+      if (!("IntersectionObserver" in window)) {
+        setHeroInView(true);
+        return;
       }
-    });
-  }
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver(
+        function (entries) {
+          var entry = entries[0];
+          if (!entry) return;
+          setHeroInView(entry.isIntersecting);
+        },
+        { root: null, threshold: 0, rootMargin: "0px" }
+      );
+      observer.observe(heroCta);
+    }
 
-  if (multiClose) {
-    multiClose.addEventListener("click", function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      closeMultiDialog();
-    });
-  }
-
-  if (multiForm) {
-    multiForm.addEventListener("click", function (event) {
-      var target = event.target;
-      if (!(target instanceof HTMLElement)) return;
-
-      if (target.classList.contains("multi-next")) {
-        var next = target.getAttribute("data-next");
-        var currentStep = target.closest(".multi-step");
-        if (!currentStep || !next) return;
-
-        var requiredRadios = currentStep.querySelectorAll('input[type="radio"][required]');
-        if (requiredRadios.length) {
-          var name = requiredRadios[0].getAttribute("name");
-          var checked = currentStep.querySelector('input[name="' + name + '"]:checked');
-          if (!checked) {
-            requiredRadios[0].focus();
-            return;
-          }
+    function syncMode() {
+      if (mobileMq && mobileMq.matches) {
+        bindObserver();
+      } else {
+        if (observer) {
+          observer.disconnect();
+          observer = null;
         }
-        showStep(next);
+        setHeroInView(false);
       }
+      applyFabDeferral();
+    }
 
-      if (target.classList.contains("multi-back")) {
-        var back = target.getAttribute("data-back");
-        if (back) showStep(back);
+    syncMode();
+    if (mobileMq) {
+      if (typeof mobileMq.addEventListener === "function") {
+        mobileMq.addEventListener("change", syncMode);
+      } else if (typeof mobileMq.addListener === "function") {
+        mobileMq.addListener(syncMode);
       }
-    });
-  }
+    }
+  })();
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
@@ -266,12 +293,131 @@
         setNav(false);
         return;
       }
-      setPanel(false);
-      if (multiDialog && multiDialog.open) {
-        closeMultiDialog();
+      if (panel && !panel.hasAttribute("hidden")) {
+        setPanel(false);
       }
     }
   });
+
+  /* Homepage reviews strip: snap + drag + expand */
+  (function initReviewsStrip() {
+    var strip = document.querySelector("[data-reviews-strip]");
+    if (!strip) return;
+    var track = strip.querySelector("[data-reviews-track]");
+    var prevBtn = document.querySelector("[data-reviews-prev]");
+    var nextBtn = document.querySelector("[data-reviews-next]");
+    var controls = document.querySelector(".reviews-strip__controls");
+    var desktopMq =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(min-width: 768px)")
+        : null;
+    var reduceMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function isDesktop() {
+      return !desktopMq || desktopMq.matches;
+    }
+
+    function updateControls() {
+      if (!controls || !prevBtn || !nextBtn) return;
+      if (!isDesktop()) {
+        controls.setAttribute("hidden", "");
+        return;
+      }
+      controls.removeAttribute("hidden");
+      var max = strip.scrollWidth - strip.clientWidth;
+      prevBtn.disabled = strip.scrollLeft <= 4;
+      nextBtn.disabled = strip.scrollLeft >= max - 4;
+    }
+
+    function scrollByDir(dir) {
+      var amount = Math.max(240, Math.floor(strip.clientWidth * 0.8));
+      strip.scrollBy({
+        left: dir * amount,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    }
+
+    if (prevBtn) prevBtn.addEventListener("click", function () { scrollByDir(-1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { scrollByDir(1); });
+    strip.addEventListener("scroll", updateControls, { passive: true });
+    window.addEventListener("resize", updateControls);
+
+    /* Drag on fine pointer desktop */
+    var dragging = false;
+    var startX = 0;
+    var startScroll = 0;
+    var pointerId = null;
+
+    function onPointerDown(event) {
+      if (!isDesktop() || event.pointerType === "touch") return;
+      if (event.target.closest("button, a")) return;
+      dragging = true;
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startScroll = strip.scrollLeft;
+      strip.classList.add("is-dragging");
+      try { strip.setPointerCapture(pointerId); } catch (err) { /* ignore */ }
+    }
+
+    function onPointerMove(event) {
+      if (!dragging) return;
+      var dx = event.clientX - startX;
+      strip.scrollLeft = startScroll - dx;
+    }
+
+    function onPointerUp() {
+      if (!dragging) return;
+      dragging = false;
+      strip.classList.remove("is-dragging");
+      pointerId = null;
+      updateControls();
+    }
+
+    strip.addEventListener("pointerdown", onPointerDown);
+    strip.addEventListener("pointermove", onPointerMove);
+    strip.addEventListener("pointerup", onPointerUp);
+    strip.addEventListener("pointercancel", onPointerUp);
+
+    strip.addEventListener("keydown", function (event) {
+      if (!isDesktop()) return;
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        scrollByDir(1);
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        scrollByDir(-1);
+      }
+    });
+
+    strip.addEventListener("click", function (event) {
+      var btn = event.target.closest("[data-review-expand]");
+      if (!btn) return;
+      var tile = btn.closest("[data-review-tile]");
+      if (!tile) return;
+      var preview = tile.querySelector("[data-review-preview]");
+      var full = tile.querySelector("[data-review-full]");
+      var expanded = tile.classList.toggle("is-expanded");
+      btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+      btn.textContent = expanded ? "Свернуть" : "Прочитать полностью";
+      if (preview) preview.hidden = expanded;
+      if (full) full.hidden = !expanded;
+      updateControls();
+    });
+
+    updateControls();
+    if (desktopMq) {
+      if (typeof desktopMq.addEventListener === "function") {
+        desktopMq.addEventListener("change", updateControls);
+      } else if (typeof desktopMq.addListener === "function") {
+        desktopMq.addListener(updateControls);
+      }
+    }
+
+    /* silence unused */
+    void track;
+  })();
 
   // Interactives on page (may be several)
   document.querySelectorAll("[data-checklist]").forEach(initChecklistRoot);
@@ -296,7 +442,7 @@
       result.hidden = false;
       var pct = Math.round((checked / total) * 100);
       if (pct >= 80) {
-        result.textContent = "Отлично! Вы отметили " + checked + " из " + total + " пунктов. У вас хороший бухгалтер. Если хотите сверить детали — посмотрите услуги или напишите Карине.";
+        result.textContent = "Вы отметили " + checked + " из " + total + " пунктов — по этим признакам сопровождение выглядит крепким. Это предварительный ориентир, а не полная диагностика: если хочется сверить детали, посмотрите услуги или напишите Карине.";
       } else if (pct >= 50) {
         result.textContent = "Вы отметили " + checked + " из " + total + " пунктов. Есть над чем поработать. Имеет смысл посмотреть услуги сопровождения.";
       } else {
@@ -335,9 +481,16 @@
       result.hidden = false;
       var title = result.querySelector("[data-quiz-result-title]");
       var text = result.querySelector("[data-quiz-result-text]");
-      var late = answers[3] === "often" || answers[3] === "sometimes";
-      var wantHelp = answers[4] === "yes" || answers[4] === "consultation";
-      if (late || wantHelp) {
+      /* Каждый вопрос даёт равный голос: неуверенность в НДС/режиме,
+         кадровая нагрузка, просрочки и желание оптимизации — все пять
+         ответов учитываются, а не только последние два. */
+      var signals = 0;
+      if (answers[0] === "unsure") signals++;
+      if (answers[1] === "unknown") signals++;
+      if (answers[2] === "6-15" || answers[2] === "15+") signals++;
+      if (answers[3] === "often" || answers[3] === "sometimes") signals++;
+      if (answers[4] === "yes" || answers[4] === "consultation") signals++;
+      if (signals >= 2) {
         if (title) title.textContent = "Имеет смысл разобрать сопровождение";
         if (text) {
           text.textContent = "По ответам видно, что полезно настроить учёт, сроки и налоги. Дальше — к услугам или короткому разговору с Кариной.";
@@ -403,3 +556,5 @@
     render();
   }
 })();
+
+

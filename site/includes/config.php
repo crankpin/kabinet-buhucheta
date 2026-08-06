@@ -50,75 +50,43 @@ $siteNavTree = [
         'label' => 'ИП',
         'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ip/',
         'lede' => 'Сопровождение ИП',
-        'links' => [
-            ['label' => 'К началу страницы', 'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ip/'],
-        ],
-        'previews' => [
-            ['caption' => 'Кому подходит', 'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ip/', 'pos' => '50% 18%', 'rot' => -4],
-            ['caption' => 'Что входит', 'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ip/', 'pos' => '50% 72%', 'rot' => 3],
-        ],
+        // Прямая ссылка: нет ≥2 существующих подразделов
+        'links' => [],
+        'previews' => [],
     ],
     [
         'id' => 'ooo',
         'label' => 'ООО',
         'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ooo-usn/',
         'lede' => 'Сопровождение ООО на УСН',
-        'links' => [
-            ['label' => 'К началу страницы', 'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ooo-usn/'],
-        ],
-        'previews' => [
-            ['caption' => 'Кому подходит', 'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ooo-usn/', 'pos' => '30% 20%', 'rot' => -2],
-            ['caption' => 'Стоимость', 'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ooo-usn/', 'pos' => '70% 65%', 'rot' => 5],
-        ],
+        'links' => [],
+        'previews' => [],
     ],
     [
         'id' => 'tax-consult',
         'label' => 'Консалтинг',
         'href' => '/uslugi/nalogovoe-konsultirovanie/',
         'lede' => 'Налоговое консультирование',
-        'links' => [
-            ['label' => 'К началу страницы', 'href' => '/uslugi/nalogovoe-konsultirovanie/'],
-        ],
-        'previews' => [
-            ['caption' => 'Как работаем', 'href' => '/uslugi/nalogovoe-konsultirovanie/', 'pos' => '20% 40%', 'rot' => -5],
-            ['caption' => 'Стоимость', 'href' => '/uslugi/nalogovoe-konsultirovanie/', 'pos' => '80% 30%', 'rot' => 2],
-        ],
+        'links' => [],
+        'previews' => [],
     ],
     [
         'id' => 'nalogi',
         'label' => 'Налоги',
         'href' => '/nalogi/',
         'lede' => 'Режимы и смежные темы',
-        'links' => [
-            ['label' => 'Обзор', 'href' => '/nalogi/'],
-            ['label' => 'УСН с НДС', 'href' => '/nalogi/usn-s-nds/'],
-            ['label' => 'АУСН', 'href' => '/nalogi/ausn/'],
-            ['label' => 'Переход с ПСН', 'href' => '/nalogi/perehod-s-psn/'],
-            ['label' => 'Выбор системы', 'href' => '/nalogi/vybor-sistemy-nalogooblozheniya/'],
-        ],
-        'previews' => [
-            ['caption' => 'УСН с НДС', 'href' => '/nalogi/usn-s-nds/', 'pos' => '40% 25%', 'rot' => -3],
-            ['caption' => 'АУСН', 'href' => '/nalogi/ausn/', 'pos' => '60% 70%', 'rot' => 4],
-        ],
+        // Дочерние страницы режимов ещё не созданы — прямая ссылка на хаб
+        'links' => [],
+        'previews' => [],
     ],
     [
         'id' => 'komu',
         'label' => 'Кому',
         'href' => '/komu-pomogaem/',
         'lede' => 'Отрасли и ситуации',
-        'links' => [
-            ['label' => 'Обзор', 'href' => '/komu-pomogaem/'],
-            ['label' => 'Розница', 'href' => '/komu-pomogaem/roznichnaya-torgovlya/'],
-            ['label' => 'Опт', 'href' => '/komu-pomogaem/optovaya-torgovlya/'],
-            ['label' => 'Кафе', 'href' => '/komu-pomogaem/kafe-i-obshchepit/'],
-            ['label' => 'Красота', 'href' => '/komu-pomogaem/industriya-krasoty/'],
-            ['label' => 'Гостиницы', 'href' => '/komu-pomogaem/gostinitsy-i-razmeshchenie/'],
-            ['label' => 'Услуги', 'href' => '/komu-pomogaem/biznes-v-sfere-uslug/'],
-        ],
-        'previews' => [
-            ['caption' => 'Розница', 'href' => '/komu-pomogaem/roznichnaya-torgovlya/', 'pos' => '25% 35%', 'rot' => -4],
-            ['caption' => 'Кафе', 'href' => '/komu-pomogaem/kafe-i-obshchepit/', 'pos' => '75% 55%', 'rot' => 3],
-        ],
+        // Отраслевые посадочные ещё не созданы — прямая ссылка на хаб
+        'links' => [],
+        'previews' => [],
     ],
     [
         'id' => 'poleznoe',
@@ -126,15 +94,12 @@ $siteNavTree = [
         'href' => '/poleznoe/',
         'lede' => 'Материалы и инструменты',
         'links' => [
-            ['label' => 'Обзор', 'href' => '/poleznoe/'],
-            ['label' => 'Статьи', 'href' => '/poleznoe/stati/'],
-            ['label' => 'Самопроверка', 'href' => '/poleznoe/proverit-buhgaltera/'],
-            ['label' => 'Квиз', 'href' => '/poleznoe/nalogovyi-kviz/'],
-            ['label' => 'Вопросы', 'href' => '/poleznoe/chastye-voprosy/'],
+            ['label' => 'Самопроверка учёта', 'href' => '/poleznoe/proverit-buhgaltera/'],
+            ['label' => 'Налоговый квиз', 'href' => '/poleznoe/nalogovyi-kviz/'],
         ],
         'previews' => [
-            ['caption' => 'Самопроверка', 'href' => '/poleznoe/proverit-buhgaltera/', 'pos' => '45% 22%', 'rot' => -2],
-            ['caption' => 'Квиз', 'href' => '/poleznoe/nalogovyi-kviz/', 'pos' => '55% 68%', 'rot' => 4],
+            ['caption' => 'Самопроверка учёта', 'href' => '/poleznoe/proverit-buhgaltera/', 'pos' => '45% 22%', 'rot' => -2],
+            ['caption' => 'Налоговый квиз', 'href' => '/poleznoe/nalogovyi-kviz/', 'pos' => '55% 68%', 'rot' => 4],
         ],
     ],
     [
@@ -144,6 +109,20 @@ $siteNavTree = [
         'lede' => 'Все способы связи — здесь',
     ],
 ];
+
+/**
+ * Есть ли у пункта содержательное mega/подменю (≥2 ссылок или panel контактов).
+ *
+ * @param array<string, mixed> $item
+ */
+function nav_item_has_submenu(array $item): bool
+{
+    if (($item['type'] ?? '') === 'contacts') {
+        return true;
+    }
+    $links = $item['links'] ?? [];
+    return is_array($links) && count($links) >= 2;
+}
 
 /** Плоский список разделов с URL (футер; без panel-only пунктов). */
 $siteNav = [];
@@ -201,7 +180,7 @@ $siteServices = [
 $siteInteractives = [
     [
         'id' => 'checklist',
-        'title' => 'Проверить бухгалтера',
+        'title' => 'Самопроверка учёта',
         'placement' => 'home',
         'cta' => '/uslugi/',
     ],

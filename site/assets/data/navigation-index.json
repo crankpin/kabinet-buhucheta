@@ -35,28 +35,12 @@
       "priority": 85
     },
     {
-      "title": "УСН с НДС",
-      "keywords": ["усн с ндс", "ндс", "упрощёнка"],
-      "group": "nalogi",
-      "url": "/nalogi/usn-s-nds/",
-      "description": "Страница про УСН с НДС",
-      "priority": 80
-    },
-    {
       "title": "Кому помогаем",
       "keywords": ["отрасли", "магазин", "кафе", "торговля", "услуги", "кому"],
       "group": "otrasli",
       "url": "/komu-pomogaem/",
       "description": "Отрасли и ситуации",
       "priority": 75
-    },
-    {
-      "title": "Розничная торговля",
-      "keywords": ["розница", "магазин", "торговля"],
-      "group": "otrasli",
-      "url": "/komu-pomogaem/roznichnaya-torgovlya/",
-      "description": "Бухгалтерия для розницы",
-      "priority": 70
     },
     {
       "title": "Полезное",
@@ -68,7 +52,7 @@
     },
     {
       "title": "Самопроверка учёта",
-      "keywords": ["самопроверка", "проверить бухгалтера", "чек-лист", "учёт"],
+      "keywords": ["самопроверка", "проверить бухгалтера", "чек-лист", "учёт", "состояние учёта"],
       "group": "poleznoe",
       "url": "/poleznoe/proverit-buhgaltera/",
       "description": "Чек-лист состояния учёта",
@@ -84,11 +68,19 @@
     },
     {
       "title": "Контакты",
-      "keywords": ["контакты", "связаться", "телефон", "telegram", "whatsapp", "консультация"],
+      "keywords": ["контакты", "связаться", "телефон", "telegram", "whatsapp"],
       "group": "kontakty",
       "url": "/kontakty/",
       "description": "Связаться с Кариной",
       "priority": 88
+    },
+    {
+      "title": "Получить консультацию",
+      "keywords": ["консультация", "получить консультацию", "cta"],
+      "group": "kontakty",
+      "url": "/#consultation",
+      "description": "Блок консультации на главной",
+      "priority": 86
     },
     {
       "title": "Отзывы",

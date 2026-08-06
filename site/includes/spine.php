@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 /**
- * Правый page-spine: локальное оглавление текущей страницы.
+ * Левый page-spine: локальное оглавление текущей страницы.
+ * Колонка gutter прозрачная; фон секций заходит под неё (без шва).
  *
  * @var array<int, array{id: string, label: string}> $spineItems
  */

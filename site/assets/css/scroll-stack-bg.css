@@ -1,0 +1,247 @@
+/* Homepage decorative 3D stack — side gutters only (desktop) */
+
+.scroll-stack-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  overflow: clip;
+  opacity: 1;
+  contain: layout paint;
+  /* Soft vertical fade so sheets enter/exit without hard viewport edges */
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+.scroll-stack-bg__scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+}
+
+.scroll-stack-bg__train {
+  position: relative;
+  grid-area: 1 / 1;
+  /* Large enough for title/fields to stay legible in side rails */
+  width: min(130px, 9vw);
+  aspect-ratio: 210 / 297;
+  height: auto;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  opacity: 0;
+}
+
+.scroll-stack-bg__card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  border-radius: 5px 8px 5px 4px;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  box-sizing: border-box;
+  aspect-ratio: 210 / 297;
+  padding: 0.9rem 0.95rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  background:
+    linear-gradient(
+      165deg,
+      #d5e2ea 0%,
+      #c9d9e4 52%,
+      #bccedb 100%
+    );
+  border: 2px solid rgba(49, 71, 91, 0.7);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, white 40%, transparent) inset,
+    0 10px 28px rgba(37, 48, 58, 0.13),
+    0 0 0 1px color-mix(in srgb, var(--color-primary) 8%, transparent);
+  color: color-mix(in srgb, var(--color-primary) 72%, var(--color-text-muted));
+  font-family: var(--font-body);
+}
+
+/* Incoming: slight proportion variety without breaking sheet feel */
+.scroll-stack-bg__train[data-train="in"] .scroll-stack-bg__card--loose {
+  inset: 2% 4% 0 0;
+  border-radius: 4px 10px 5px 4px;
+}
+
+.scroll-stack-bg__train[data-train="out"] .scroll-stack-bg__card {
+  border-radius: 4px;
+  border-color: rgba(92, 67, 57, 0.62);
+  background:
+    linear-gradient(
+      160deg,
+      #ead5ca 0%,
+      #dfc9be 52%,
+      #d8c0b5 100%
+    );
+}
+
+.scroll-stack-bg__train[data-train="out"] .scroll-stack-bg__card--tabbed::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 12%;
+  width: 22%;
+  height: 7px;
+  border-radius: 3px 3px 0 0;
+  background: color-mix(in srgb, var(--color-warm-soft) 55%, var(--color-surface));
+  border: 1px solid color-mix(in srgb, var(--color-gold) 20%, var(--color-border));
+  border-bottom: none;
+}
+
+.scroll-stack-bg__train[data-train="out"] .scroll-stack-bg__badge {
+  letter-spacing: 0.1em;
+}
+
+.scroll-stack-bg__card--register,
+.scroll-stack-bg__card--sheet {
+  background:
+    linear-gradient(
+      160deg,
+      #e6d9d2 0%,
+      #c6d7e2 100%
+    );
+}
+
+.scroll-stack-bg__card--folder {
+  border-radius: 8px 8px 4px 4px;
+  background:
+    linear-gradient(
+      180deg,
+      #dfc9bc 0%,
+      #cbd9e1 28%,
+      #bfd0db 100%
+    );
+}
+
+.scroll-stack-bg__badge {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  border-radius: 2px;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-primary) 75%, transparent);
+  line-height: 1.2;
+}
+
+.scroll-stack-bg__title {
+  display: block;
+  margin: 0.15rem 0 0.35rem;
+  font-size: 0.63rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--color-ink) 78%, var(--color-primary));
+}
+
+.scroll-stack-bg__field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.16rem;
+}
+
+.scroll-stack-bg__field-label {
+  font-size: 0.47rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text-muted) 85%, var(--color-primary));
+}
+
+.scroll-stack-bg__field-line {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  border-radius: 1px;
+}
+
+.scroll-stack-bg__card--ledger .scroll-stack-bg__field-line {
+  height: 5px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-primary) 12%, transparent) 0 28%,
+      transparent 28% 32%
+    );
+  opacity: 0.75;
+}
+
+.scroll-stack-bg__card--stamp .scroll-stack-bg__mark,
+.scroll-stack-bg__card--signed .scroll-stack-bg__mark {
+  display: block;
+}
+
+.scroll-stack-bg__mark {
+  display: none;
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--color-warm) 40%, transparent);
+  opacity: 0.55;
+}
+
+.scroll-stack-bg__card--signed .scroll-stack-bg__mark {
+  border-radius: 0;
+  border: none;
+  width: 2.6rem;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-primary) 28%, transparent);
+  transform: rotate(-12deg);
+  bottom: 1.1rem;
+}
+
+/* Phones + tablets: no decorative trains */
+@media (max-width: 1024px) {
+  .scroll-stack-bg {
+    display: none !important;
+  }
+}
+
+/* Desktop home: reserve outer rails so train-out sits LEFT of spine
+   and sheets have room to stay legible (shell stays centered). */
+@media (min-width: 1200px) {
+  body.page-home {
+    --train-rail: clamp(120px, 10vw, 180px);
+  }
+
+  body.page-home .page-shell--spine {
+    width: min(
+      calc(100% - 2 * var(--train-rail)),
+      calc(1280px + var(--spine-w))
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-stack-bg {
+    display: none !important;
+  }
+}

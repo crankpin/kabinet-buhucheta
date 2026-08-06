@@ -12,7 +12,7 @@ $karinaPreview = asset('images/karina-hero.webp');
     <div class="site-header__inner">
       <a class="site-logo" href="<?= e(url('/')) ?>" aria-label="<?= e(SITE_NAME) ?> — на главную">
         <img
-          src="<?= e(asset('images/logo.svg')) ?>"
+          src="<?= e(asset('images/logo-88.png')) ?>"
           alt=""
           width="44"
           height="44"
@@ -49,6 +49,7 @@ $karinaPreview = asset('images/karina-hero.webp');
             $type = (string) ($item['type'] ?? 'page');
             $href = (string) ($item['href'] ?? '');
             $current = $href !== '' && nav_is_current($href);
+            $hasSub = nav_item_has_submenu($item);
           ?>
           <?php if ($type === 'contacts'): ?>
             <button
@@ -58,13 +59,19 @@ $karinaPreview = asset('images/karina-hero.webp');
               aria-expanded="false"
               aria-controls="mega-panel"
             ><?= e($label) ?></button>
-          <?php else: ?>
+          <?php elseif ($hasSub): ?>
             <a
               class="site-header__item"
               href="<?= e(url($href)) ?>"
               data-mega-hover="<?= e($id) ?>"
               aria-expanded="false"
               aria-controls="mega-panel"
+              <?= $current ? ' aria-current="page"' : '' ?>
+            ><?= e($label) ?></a>
+          <?php else: ?>
+            <a
+              class="site-header__item"
+              href="<?= e(url($href)) ?>"
               <?= $current ? ' aria-current="page"' : '' ?>
             ><?= e($label) ?></a>
           <?php endif; ?>
@@ -100,6 +107,9 @@ $karinaPreview = asset('images/karina-hero.webp');
             $id = (string) ($item['id'] ?? '');
             $type = (string) ($item['type'] ?? 'page');
             if ($type === 'contacts') {
+                continue;
+            }
+            if (!nav_item_has_submenu($item)) {
                 continue;
             }
             $label = (string) ($item['label'] ?? '');
@@ -172,7 +182,8 @@ $karinaPreview = asset('images/karina-hero.webp');
           <p class="mega__title">Контакты</p>
           <p class="mega__lede">Все способы связи — здесь</p>
           <div class="mega-contacts">
-            <a class="mega-contacts__item is-primary" href="<?= e(url('/kontakty/')) ?>">Получить консультацию</a>
+            <a class="mega-contacts__item is-primary" href="<?= e(url('/#consultation')) ?>">Получить консультацию</a>
+            <a class="mega-contacts__item" href="<?= e(url('/#contacts')) ?>">Контакты</a>
             <a class="mega-contacts__item" href="<?= e($siteContacts['telegram']) ?>" target="_blank" rel="noopener noreferrer nofollow">Telegram</a>
             <a class="mega-contacts__item" href="<?= e($siteContacts['whatsapp']) ?>" target="_blank" rel="noopener noreferrer nofollow">WhatsApp</a>
             <a class="mega-contacts__item" href="tel:<?= e($siteContacts['phone_primary_tel']) ?>"><?= e($siteContacts['phone_primary']) ?></a>
@@ -186,7 +197,7 @@ $karinaPreview = asset('images/karina-hero.webp');
 
   <div class="nav-overlay" id="nav-overlay" hidden></div>
 
-  <div class="poster site-nav-mobile" id="site-nav-mobile" role="dialog" aria-modal="true" aria-label="Меню" aria-hidden="true">
+  <div class="poster site-nav-mobile" id="site-nav-mobile" role="dialog" aria-modal="true" aria-label="Меню" aria-hidden="true" inert>
     <div class="poster__chrome">
       <div class="poster__head">
         <div class="title-wrap">
@@ -209,32 +220,38 @@ $karinaPreview = asset('images/karina-hero.webp');
             $type = (string) ($item['type'] ?? 'page');
             $href = (string) ($item['href'] ?? '');
             $links = $item['links'] ?? [];
+            $hasSub = nav_item_has_submenu($item);
           ?>
-          <li class="poster-acc__item" data-acc="<?= e($id) ?>">
+          <li class="poster-acc__item<?= $hasSub ? '' : ' poster-acc__item--leaf' ?>" data-acc="<?= e($id) ?>">
             <div class="poster-acc__row">
               <?php if ($type === 'contacts'): ?>
                 <button type="button" class="poster-acc__page poster-acc__page--btn" data-acc-open="<?= e($id) ?>"><?= e($label) ?></button>
               <?php else: ?>
                 <a class="poster-acc__page" href="<?= e(url($href)) ?>"><?= e($label) ?></a>
               <?php endif; ?>
-              <button type="button" class="poster-acc__toggle" aria-expanded="false" aria-label="Подменю: <?= e($label) ?>">
-                <span class="poster-acc__plus" aria-hidden="true"></span>
-              </button>
+              <?php if ($hasSub): ?>
+                <button type="button" class="poster-acc__toggle" aria-expanded="false" aria-label="Подменю: <?= e($label) ?>">
+                  <span class="poster-acc__plus" aria-hidden="true"></span>
+                </button>
+              <?php endif; ?>
             </div>
-            <div class="poster-acc__panel" hidden>
-              <div class="poster-acc__links">
-                <?php if ($type === 'contacts'): ?>
-                  <a href="<?= e(url('/kontakty/')) ?>">Получить консультацию</a>
-                  <a href="<?= e($siteContacts['telegram']) ?>" target="_blank" rel="noopener noreferrer nofollow">Telegram</a>
-                  <a href="<?= e($siteContacts['whatsapp']) ?>" target="_blank" rel="noopener noreferrer nofollow">WhatsApp</a>
-                  <a href="tel:<?= e($siteContacts['phone_primary_tel']) ?>"><?= e($siteContacts['phone_primary']) ?></a>
-                <?php elseif (is_array($links)): ?>
-                  <?php foreach ($links as $link): ?>
-                    <a href="<?= e(url((string) $link['href'])) ?>"><?= e((string) $link['label']) ?></a>
-                  <?php endforeach; ?>
-                <?php endif; ?>
+            <?php if ($hasSub): ?>
+              <div class="poster-acc__panel" hidden>
+                <div class="poster-acc__links">
+                  <?php if ($type === 'contacts'): ?>
+                    <a href="<?= e(url('/#contacts')) ?>">Контакты на сайте</a>
+                    <a href="<?= e(url('/kontakty/')) ?>">Страница контактов</a>
+                    <a href="<?= e($siteContacts['telegram']) ?>" target="_blank" rel="noopener noreferrer nofollow">Telegram</a>
+                    <a href="<?= e($siteContacts['whatsapp']) ?>" target="_blank" rel="noopener noreferrer nofollow">WhatsApp</a>
+                    <a href="tel:<?= e($siteContacts['phone_primary_tel']) ?>"><?= e($siteContacts['phone_primary']) ?></a>
+                  <?php elseif (is_array($links)): ?>
+                    <?php foreach ($links as $link): ?>
+                      <a href="<?= e(url((string) $link['href'])) ?>"><?= e((string) $link['label']) ?></a>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </div>
               </div>
-            </div>
+            <?php endif; ?>
           </li>
         <?php endforeach; ?>
       </ul>
