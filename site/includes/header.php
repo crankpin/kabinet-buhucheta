@@ -13,10 +13,12 @@ $karinaPreview = asset('images/karina-hero.webp');
       <a class="site-logo" href="<?= e(url('/')) ?>" aria-label="<?= e(SITE_NAME) ?> — на главную">
         <img
           src="<?= e(asset('images/logo-88.png')) ?>"
+          srcset="<?= e(asset('images/logo-88.png')) ?> 1x, <?= e(asset('images/logo-176.png')) ?> 2x"
           alt=""
-          width="44"
-          height="44"
+          width="56"
+          height="56"
           class="site-logo__img"
+          decoding="async"
         >
         <span class="site-logo__text">
           <span class="site-logo__name"><?= e(SITE_NAME) ?></span>

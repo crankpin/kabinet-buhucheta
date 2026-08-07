@@ -314,6 +314,9 @@ a {
 .site-logo__img {
   width: 56px;
   height: 56px;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
 }
 
 .site-logo__name {

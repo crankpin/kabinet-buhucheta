@@ -33,6 +33,7 @@ $bodyClass = trim('page ' . (string) ($page['body_class'] ?? ''));
   <link rel="icon" type="image/svg+xml" href="<?= e(asset('images/favicon.svg')) ?>">
   <link rel="icon" type="image/png" sizes="32x32" href="<?= e(asset('images/favicon-32x32.png')) ?>">
   <link rel="icon" type="image/png" sizes="16x16" href="<?= e(asset('images/favicon-16x16.png')) ?>">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?= e(asset('images/apple-touch-icon.png')) ?>">
 
   <?php /* Preload URLs must be byte-identical to the @font-face src in main.css (no cache-bust query string), otherwise the browser fetches each font twice. */ ?>
   <link rel="preload" href="<?= e(url('/assets/fonts/Unbounded-Regular.woff2')) ?>" as="font" type="font/woff2" crossorigin>
