@@ -2,6 +2,8 @@
 :root {
   --site-header-h: 56px;
   --spine-w: 168px;
+  /* Shared soft veil: header + mega panel match */
+  --nav-surface: color-mix(in srgb, var(--bg) 82%, transparent);
 }
 
 .sr-only {
@@ -32,13 +34,12 @@
 
 .site-header--mega.is-scrolled,
 .site-header--mega.is-mega-open {
-  /* Soft veil with open edges — no hard rectangle / border strip */
+  /* Same density as .mega; soft open edges only on the bar */
   background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in srgb, var(--bg) 42%, transparent) 10%,
-    color-mix(in srgb, var(--bg) 62%, transparent) 50%,
-    color-mix(in srgb, var(--bg) 42%, transparent) 90%,
+    var(--nav-surface) 10%,
+    var(--nav-surface) 90%,
     transparent 100%
   );
   border-bottom-color: transparent;
@@ -47,14 +48,12 @@
 }
 
 @media (max-width: 1100px) {
-  /* Mobile: same soft veil, readable without a hard bar edge */
   .site-header--mega {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      color-mix(in srgb, var(--bg) 48%, transparent) 8%,
-      color-mix(in srgb, var(--bg) 68%, transparent) 50%,
-      color-mix(in srgb, var(--bg) 48%, transparent) 92%,
+      var(--nav-surface) 8%,
+      var(--nav-surface) 92%,
       transparent 100%
     );
     border-bottom-color: transparent;
@@ -258,16 +257,12 @@
   .site-header--mega .mega {
     display: grid;
     grid-template-rows: 0fr;
-    background: linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--bg) 70%, var(--white)),
-      color-mix(in srgb, var(--bg-deep) 85%, var(--brand))
-    );
+    background: var(--nav-surface);
     transition: grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .site-header--mega.is-mega-open .mega {
     grid-template-rows: 1fr;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid color-mix(in srgb, var(--line, var(--color-border)) 35%, transparent);
   }
 }
 

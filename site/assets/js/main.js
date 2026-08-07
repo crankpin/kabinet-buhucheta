@@ -299,11 +299,11 @@
     }
   });
 
-  /* Homepage reviews strip: snap + drag + expand */
+  /* Homepage reviews strip: snap + drag + expand + slow autoplay */
   (function initReviewsStrip() {
     var strip = document.querySelector("[data-reviews-strip]");
     if (!strip) return;
-    var track = strip.querySelector("[data-reviews-track]");
+    var shell = strip.closest(".reviews-strip-shell") || strip.parentElement;
     var prevBtn = document.querySelector("[data-reviews-prev]");
     var nextBtn = document.querySelector("[data-reviews-next]");
     var controls = document.querySelector(".reviews-strip__controls");
@@ -311,9 +311,14 @@
       typeof window.matchMedia === "function"
         ? window.matchMedia("(min-width: 768px)")
         : null;
-    var reduceMotion =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var reduceMotionMq =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null;
+
+    function reduceMotion() {
+      return !!(reduceMotionMq && reduceMotionMq.matches);
+    }
 
     function isDesktop() {
       return !desktopMq || desktopMq.matches;
@@ -335,8 +340,10 @@
       var amount = Math.max(240, Math.floor(strip.clientWidth * 0.8));
       strip.scrollBy({
         left: dir * amount,
-        behavior: reduceMotion ? "auto" : "smooth",
+        behavior: reduceMotion() ? "auto" : "smooth",
       });
+      pauseAutoplay();
+      scheduleResume();
     }
 
     if (prevBtn) prevBtn.addEventListener("click", function () { scrollByDir(-1); });
@@ -344,35 +351,47 @@
     strip.addEventListener("scroll", updateControls, { passive: true });
     window.addEventListener("resize", updateControls);
 
-    /* Drag on fine pointer desktop */
+    /* Drag on fine pointer desktop (starts after small move, so click can freeze) */
     var dragging = false;
+    var dragPending = false;
     var startX = 0;
     var startScroll = 0;
     var pointerId = null;
+    var pointerMoved = false;
 
     function onPointerDown(event) {
       if (!isDesktop() || event.pointerType === "touch") return;
       if (event.target.closest("button, a")) return;
-      dragging = true;
+      dragPending = true;
+      dragging = false;
+      pointerMoved = false;
       pointerId = event.pointerId;
       startX = event.clientX;
       startScroll = strip.scrollLeft;
-      strip.classList.add("is-dragging");
       try { strip.setPointerCapture(pointerId); } catch (err) { /* ignore */ }
     }
 
     function onPointerMove(event) {
-      if (!dragging) return;
+      if (!dragPending && !dragging) return;
       var dx = event.clientX - startX;
+      if (!dragging && Math.abs(dx) > 6) {
+        dragging = true;
+        pointerMoved = true;
+        strip.classList.add("is-dragging");
+        pauseAutoplay();
+      }
+      if (!dragging) return;
       strip.scrollLeft = startScroll - dx;
     }
 
     function onPointerUp() {
-      if (!dragging) return;
+      var wasDragging = dragging;
+      dragPending = false;
       dragging = false;
       strip.classList.remove("is-dragging");
       pointerId = null;
       updateControls();
+      if (wasDragging) scheduleResume();
     }
 
     strip.addEventListener("pointerdown", onPointerDown);
@@ -404,19 +423,202 @@
       if (preview) preview.hidden = expanded;
       if (full) full.hidden = !expanded;
       updateControls();
+      if (expanded) {
+        pauseAutoplay();
+      } else if (!hasExpandedReview()) {
+        scheduleResume();
+      }
     });
 
-    updateControls();
-    if (desktopMq) {
-      if (typeof desktopMq.addEventListener === "function") {
-        desktopMq.addEventListener("change", updateControls);
-      } else if (typeof desktopMq.addListener === "function") {
-        desktopMq.addListener(updateControls);
+    /* Continuous autoplay (desktop only), bounce at ends.
+       Hover slows; click freezes (click again or leave to resume). */
+    var AUTO_PX_PER_SEC = 22;
+    var HOVER_SPEED_FACTOR = 0.32;
+    var RESUME_MS = 3000;
+    var autoDir = 1;
+    var autoPaused = false;
+    var clickFrozen = false;
+    var hovering = false;
+    var autoRaf = 0;
+    var resumeTimer = 0;
+    var lastTs = 0;
+    var autoPos = null;
+
+    function hasExpandedReview() {
+      return !!strip.querySelector(".review-tile.is-expanded");
+    }
+
+    function canAutoplay() {
+      return (
+        isDesktop() &&
+        !reduceMotion() &&
+        !autoPaused &&
+        !clickFrozen &&
+        !dragging &&
+        !hasExpandedReview()
+      );
+    }
+
+    function setAutoplayingClass(on) {
+      if (on) strip.classList.add("is-autoplaying");
+      else strip.classList.remove("is-autoplaying");
+    }
+
+    function pauseAutoplay() {
+      autoPaused = true;
+      lastTs = 0;
+      autoPos = null;
+      setAutoplayingClass(false);
+      if (resumeTimer) {
+        window.clearTimeout(resumeTimer);
+        resumeTimer = 0;
       }
     }
 
-    /* silence unused */
-    void track;
+    function scheduleResume() {
+      if (resumeTimer) window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(function () {
+        resumeTimer = 0;
+        if (!dragging && !hasExpandedReview() && !clickFrozen) {
+          autoPaused = false;
+          lastTs = 0;
+          autoPos = null;
+        }
+      }, RESUME_MS);
+    }
+
+    function autoTick(ts) {
+      autoRaf = window.requestAnimationFrame(autoTick);
+      if (!canAutoplay()) {
+        setAutoplayingClass(false);
+        lastTs = 0;
+        autoPos = null;
+        return;
+      }
+      setAutoplayingClass(true);
+      if (!lastTs) {
+        lastTs = ts;
+        autoPos = strip.scrollLeft;
+        return;
+      }
+      var dt = Math.min(48, ts - lastTs) / 1000;
+      lastTs = ts;
+      var max = strip.scrollWidth - strip.clientWidth;
+      if (max <= 4) return;
+      if (autoPos === null) autoPos = strip.scrollLeft;
+      var speed = AUTO_PX_PER_SEC * (hovering ? HOVER_SPEED_FACTOR : 1);
+      autoPos += autoDir * speed * dt;
+      if (autoPos <= 0) {
+        autoPos = 0;
+        autoDir = 1;
+      } else if (autoPos >= max) {
+        autoPos = max;
+        autoDir = -1;
+      }
+      /* Keep fractional position in autoPos; avoid Math.round (causes stutter). */
+      strip.scrollLeft = autoPos;
+    }
+
+    if (shell) {
+      shell.addEventListener("mouseenter", function () {
+        hovering = true;
+      });
+      shell.addEventListener("mouseleave", function () {
+        hovering = false;
+        if (clickFrozen) {
+          clickFrozen = false;
+          lastTs = 0;
+          autoPos = null;
+        }
+        if (!dragging && !hasExpandedReview()) {
+          autoPaused = false;
+        }
+      });
+      shell.addEventListener("focusin", function () {
+        hovering = true;
+      });
+      shell.addEventListener("focusout", function () {
+        window.setTimeout(function () {
+          if (!shell.contains(document.activeElement)) {
+            hovering = false;
+            if (clickFrozen) {
+              clickFrozen = false;
+              lastTs = 0;
+              autoPos = null;
+            }
+          }
+        }, 0);
+      });
+    }
+
+    strip.addEventListener("click", function (event) {
+      if (!isDesktop() || reduceMotion()) return;
+      if (event.target.closest("button, a, .reviews-strip__btn")) return;
+      if (pointerMoved || dragging) return;
+      clickFrozen = !clickFrozen;
+      autoPaused = false;
+      lastTs = 0;
+      autoPos = null;
+      if (clickFrozen) {
+        setAutoplayingClass(false);
+        if (resumeTimer) {
+          window.clearTimeout(resumeTimer);
+          resumeTimer = 0;
+        }
+      }
+    });
+
+    strip.addEventListener(
+      "wheel",
+      function () {
+        pauseAutoplay();
+        scheduleResume();
+      },
+      { passive: true }
+    );
+
+    function syncAutoplayMode() {
+      if (resumeTimer) {
+        window.clearTimeout(resumeTimer);
+        resumeTimer = 0;
+      }
+      clickFrozen = false;
+      hovering = false;
+      if (isDesktop() && !reduceMotion()) {
+        autoPaused = false;
+        lastTs = 0;
+        autoPos = null;
+        if (!autoRaf) autoRaf = window.requestAnimationFrame(autoTick);
+      } else {
+        autoPaused = true;
+        lastTs = 0;
+        autoPos = null;
+        setAutoplayingClass(false);
+        if (autoRaf) {
+          window.cancelAnimationFrame(autoRaf);
+          autoRaf = 0;
+        }
+      }
+      updateControls();
+    }
+
+    updateControls();
+    syncAutoplayMode();
+
+    if (desktopMq) {
+      if (typeof desktopMq.addEventListener === "function") {
+        desktopMq.addEventListener("change", syncAutoplayMode);
+      } else if (typeof desktopMq.addListener === "function") {
+        desktopMq.addListener(syncAutoplayMode);
+      }
+    }
+    if (reduceMotionMq) {
+      if (typeof reduceMotionMq.addEventListener === "function") {
+        reduceMotionMq.addEventListener("change", syncAutoplayMode);
+      } else if (typeof reduceMotionMq.addListener === "function") {
+        reduceMotionMq.addListener(syncAutoplayMode);
+      }
+    }
   })();
 
   // Interactives on page (may be several)

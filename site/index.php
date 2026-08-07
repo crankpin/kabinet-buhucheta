@@ -282,35 +282,40 @@ $processSteps = [
 
 <section class="home-about" id="about" aria-labelledby="about-title">
   <div class="container photo-stage">
-    <div class="photo-stage__text">
-      <header class="section-head">
-        <p class="eyebrow">О специалисте</p>
-        <h2 id="about-title">Кто здесь за всё отвечает?</h2>
-      </header>
-      <p class="section-lead">
-        Карина Сизонова работает в бухгалтерии с 2013 года. Дипломированный налоговый консультант,
-        состоит в Федеральной палате налоговых консультантов. Лично участвует в работе и общении,
-        до начала фиксирует состав и границы сторон. Основной формат — дистанционный;
-        офис находится в Ростове-на-Дону.
-      </p>
-      <ul class="about-facts">
-        <li>Диплом по квалификации «Налоговый консультант» — 7 октября 2025 года</li>
-        <li>Аттестат ФПНК № 3722864 — действует до 18 октября 2027 года</li>
-        <li>Запись можно проверить в <a href="https://fp-nk.ru/person/3722864" target="_blank" rel="noopener noreferrer nofollow">официальном реестре</a></li>
-      </ul>
-      <a class="text-link" href="#about">Подробнее о Карине</a>
+    <div class="photo-stage__lead">
+      <div class="photo-stage__text">
+        <header class="section-head">
+          <p class="eyebrow">О специалисте</p>
+          <h2 id="about-title">Кто здесь за всё отвечает?</h2>
+        </header>
+        <p class="section-lead">
+          Карина Сизонова работает в бухгалтерии с 2013 года. Дипломированный налоговый консультант,
+          состоит в Федеральной палате налоговых консультантов. Лично участвует в работе и общении,
+          до начала фиксирует состав и границы сторон. Основной формат — дистанционный;
+          офис находится в Ростове-на-Дону.
+        </p>
+        <ul class="about-facts">
+          <li>Диплом по квалификации «Налоговый консультант» — 7 октября 2025 года</li>
+          <li>Аттестат ФПНК № 3722864 — действует до 18 октября 2027 года</li>
+          <li>Запись можно проверить в <a href="https://fp-nk.ru/person/3722864" target="_blank" rel="noopener noreferrer nofollow">официальном реестре</a></li>
+        </ul>
+      </div>
+
+      <div class="photo-portrait__bay">
+        <p class="about-brand-mark"><?= e(SITE_NAME) ?></p>
+        <img
+          class="about-welcome-chair"
+          src="<?= e(asset('images/welcome-chair-owl.webp')) ?>"
+          alt="Кресло с подушкой-совой — место для гостя"
+          width="720"
+          height="883"
+          decoding="async"
+          loading="lazy"
+        >
+      </div>
     </div>
 
     <figure class="photo-portrait">
-      <img
-        class="about-welcome-chair"
-        src="<?= e(asset('images/welcome-chair-owl.webp')) ?>"
-        alt="Кресло с подушкой-совой — место для гостя"
-        width="720"
-        height="883"
-        decoding="async"
-        loading="lazy"
-      >
       <picture>
         <source srcset="<?= e(asset('images/karina-hero.webp')) ?>" type="image/webp">
         <img
@@ -323,7 +328,6 @@ $processSteps = [
           decoding="async"
         >
       </picture>
-      <figcaption class="photo-portrait__cap">Карина Сизонова</figcaption>
     </figure>
   </div>
 </section>
