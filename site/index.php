@@ -10,14 +10,14 @@ $page = [
     'body_class' => 'page-home',
     'scroll_stack' => true,
     'spine' => [
-        ['id' => 'nachalo', 'label' => 'Начало'],
-        ['id' => 'services', 'label' => 'Услуги'],
-        ['id' => 'situations', 'label' => 'Ситуации'],
-        ['id' => 'about', 'label' => 'Карина'],
-        ['id' => 'scope', 'label' => 'Работа'],
-        ['id' => 'process', 'label' => 'Старт'],
-        ['id' => 'reviews', 'label' => 'Отзывы'],
-        ['id' => 'consultation', 'label' => 'Контакты'],
+        ['id' => 'nachalo', 'label' => 'Сначала главное!'],
+        ['id' => 'services', 'label' => 'Чем занимаемся?'],
+        ['id' => 'situations', 'label' => 'Когда это нужно?'],
+        ['id' => 'about', 'label' => 'Кто отвечает?'],
+        ['id' => 'scope', 'label' => 'Что входит в работу?'],
+        ['id' => 'process', 'label' => 'Как всё начинается?'],
+        ['id' => 'reviews', 'label' => 'Что говорят клиенты?'],
+        ['id' => 'consultation', 'label' => 'Куда писать?'],
     ],
 ];
 
@@ -231,8 +231,8 @@ $processSteps = [
   <div class="container">
     <header class="section-head">
       <p class="eyebrow">Услуги</p>
-      <h2 id="services-title">Чем можем помочь</h2>
-      <p class="section-lead">Стартовая цена на сайте. Окончательная стоимость — после опросника и данных о бизнесе.</p>
+      <h2 id="services-title">Чем мы здесь вообще занимаемся?</h2>
+      <p class="section-lead">Ведём бухгалтерию ИП и ООО на УСН и отдельно разбираем налоговые вопросы. Цена на сайте — стартовая; точная — после опросника и данных о бизнесе.</p>
     </header>
 
     <ul class="service-monolith" aria-label="Услуги">
@@ -260,8 +260,8 @@ $processSteps = [
   <div class="container">
     <header class="section-head section-head--narrow">
       <p class="eyebrow">Ситуации</p>
-      <h2 id="situations-title">Когда к нам приходят</h2>
-      <p class="section-lead">Узнайте себя в типичном запросе — без каталога всех отраслей сразу.</p>
+      <h2 id="situations-title">А оно вам надо?</h2>
+      <p class="section-lead">По какому поводу к нам приходят люди — возможно, в одном из этих сюжетов вы узнаете свой.</p>
     </header>
 
     <div class="situations-mount" role="list">
@@ -285,7 +285,7 @@ $processSteps = [
     <div class="photo-stage__text">
       <header class="section-head">
         <p class="eyebrow">О специалисте</p>
-        <h2 id="about-title">Карина и кабинет</h2>
+        <h2 id="about-title">Кто здесь за всё отвечает?</h2>
       </header>
       <p class="section-lead">
         Карина Сизонова работает в бухгалтерии с 2013 года. Дипломированный налоговый консультант,
@@ -301,23 +301,29 @@ $processSteps = [
       <a class="text-link" href="#about">Подробнее о Карине</a>
     </div>
 
-    <figure class="photo-arch">
-      <div class="photo-arch__frame">
-        <picture>
-          <source srcset="<?= e(asset('images/karina-hero.avif')) ?>" type="image/avif">
-          <source srcset="<?= e(asset('images/karina-hero.webp')) ?>" type="image/webp">
-          <img
-            src="<?= e(asset('images/karina-hero.webp')) ?>"
-            alt="Карина Сизонова — бухгалтер и налоговый консультант"
-            width="400"
-            height="600"
-            class="photo-arch__img"
-            loading="lazy"
-            decoding="async"
-          >
-        </picture>
-      </div>
-      <figcaption class="photo-arch__cap">Карина Сизонова</figcaption>
+    <figure class="photo-portrait">
+      <img
+        class="about-welcome-chair"
+        src="<?= e(asset('images/welcome-chair-owl.webp')) ?>"
+        alt="Кресло с подушкой-совой — место для гостя"
+        width="720"
+        height="883"
+        decoding="async"
+        loading="lazy"
+      >
+      <picture>
+        <source srcset="<?= e(asset('images/karina-hero.webp')) ?>" type="image/webp">
+        <img
+          src="<?= e(asset('images/karina-hero.webp')) ?>"
+          alt="Карина Сизонова — бухгалтер и налоговый консультант"
+          width="429"
+          height="1306"
+          class="photo-portrait__img"
+          loading="lazy"
+          decoding="async"
+        >
+      </picture>
+      <figcaption class="photo-portrait__cap">Карина Сизонова</figcaption>
     </figure>
   </div>
 </section>
@@ -326,8 +332,8 @@ $processSteps = [
   <div class="container">
     <header class="section-head">
       <p class="eyebrow">Объём работы</p>
-      <h2 id="scope-title">Что берём на себя</h2>
-      <p class="section-lead">Открытый регистр: согласованная работа, то, что оценивается отдельно, и то, что мы не выполняем.</p>
+      <h2 id="scope-title">Ладно, а делать-то что будем?</h2>
+      <p class="section-lead">Без бухгалтерского тумана: что входит в согласованный состав, что оценивается отдельно и чем мы не занимаемся.</p>
     </header>
 
     <div class="register">
@@ -367,8 +373,8 @@ $processSteps = [
   <div class="container">
     <header class="section-head">
       <p class="eyebrow">Старт</p>
-      <h2 id="process-title">Как начинается работа</h2>
-      <p class="section-lead">Четыре шага без обещания «всё под ключ» заранее.</p>
+      <h2 id="process-title">Допустим, мы друг другу подходим. Что дальше?</h2>
+      <p class="section-lead">Знакомство, опросник, оценка и договор. Четыре понятных шага — без обещания «всё под ключ» до знакомства с вашим бизнесом.</p>
     </header>
 
     <ol class="thread">
@@ -390,62 +396,69 @@ $processSteps = [
     <header class="section-head section-head--reviews">
       <div>
         <p class="eyebrow">Нас рекомендуют</p>
-        <h2 id="reviews-title">Отзывы</h2>
-      </div>
-      <div class="reviews-strip__controls" hidden>
-        <button type="button" class="reviews-strip__btn" data-reviews-prev aria-label="Предыдущие отзывы">‹</button>
-        <button type="button" class="reviews-strip__btn" data-reviews-next aria-label="Следующие отзывы">›</button>
+        <h2 id="reviews-title">Похвалить себя можно. А зачем?</h2>
+        <p class="section-lead">Пусть лучше за нас говорят те, кто уже работает с Кариной.</p>
       </div>
     </header>
 
     <?php if ($homeReviews !== []): ?>
-    <div
-      class="reviews-strip"
-      data-reviews-strip
-      tabindex="0"
-      role="region"
-      aria-roledescription="карусель"
-      aria-label="Отзывы клиентов"
-    >
-      <div class="reviews-strip__track" data-reviews-track>
-        <?php foreach ($homeReviews as $review):
-            $author = (string) ($review['author'] ?? 'Клиент');
-            if (($review['authorNote'] ?? '') !== '') {
-                $author = (string) $review['authorNote'];
-            }
-            $text = (string) ($review['text'] ?? '');
-            $needsExpand = home_str_len($text) > $reviewPreviewLimit;
-            $preview = $needsExpand
-                ? rtrim(home_str_cut_words($text, $reviewPreviewLimit)) . '…'
-                : $text;
-            $rating = max(0, min(5, (int) ($review['rating'] ?? 0)));
-            $reviewDate = home_format_date_ru((string) ($review['date'] ?? ''));
-            $reviewSource = (string) ($review['source'] ?? '');
-            ?>
-          <article class="review-tile" data-review-tile<?= $needsExpand ? ' data-expandable' : '' ?>>
-            <div class="review-tile__head">
-              <p class="review-tile__author"><?= e($author) ?></p>
-              <?php if ($rating > 0): ?>
-                <p class="review-tile__rating">
-                  <span aria-hidden="true"><?= e(str_repeat('★', $rating) . str_repeat('☆', 5 - $rating)) ?></span>
-                  <span class="sr-only">Оценка: <?= e((string) $rating) ?> из 5</span>
+    <div class="reviews-strip-shell">
+      <div class="reviews-strip__controls" hidden>
+        <button type="button" class="reviews-strip__btn" data-reviews-prev aria-label="Предыдущие отзывы">
+          <span class="reviews-strip__arrow" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="reviews-strip__btn reviews-strip__btn--next" data-reviews-next aria-label="Следующие отзывы">
+          <span class="reviews-strip__arrow" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div
+        class="reviews-strip"
+        data-reviews-strip
+        tabindex="0"
+        role="region"
+        aria-roledescription="карусель"
+        aria-label="Отзывы клиентов"
+      >
+        <div class="reviews-strip__track" data-reviews-track>
+          <?php foreach ($homeReviews as $review):
+              $author = (string) ($review['author'] ?? 'Клиент');
+              if (($review['authorNote'] ?? '') !== '') {
+                  $author = (string) $review['authorNote'];
+              }
+              $text = (string) ($review['text'] ?? '');
+              $needsExpand = home_str_len($text) > $reviewPreviewLimit;
+              $preview = $needsExpand
+                  ? rtrim(home_str_cut_words($text, $reviewPreviewLimit)) . '…'
+                  : $text;
+              $rating = max(0, min(5, (int) ($review['rating'] ?? 0)));
+              $reviewDate = home_format_date_ru((string) ($review['date'] ?? ''));
+              $reviewSource = (string) ($review['source'] ?? '');
+              ?>
+            <article class="review-tile" data-review-tile<?= $needsExpand ? ' data-expandable' : '' ?>>
+              <div class="review-tile__head">
+                <p class="review-tile__author"><?= e($author) ?></p>
+                <?php if ($rating > 0): ?>
+                  <p class="review-tile__rating">
+                    <span aria-hidden="true"><?= e(str_repeat('★', $rating) . str_repeat('☆', 5 - $rating)) ?></span>
+                    <span class="sr-only">Оценка: <?= e((string) $rating) ?> из 5</span>
+                  </p>
+                <?php endif; ?>
+              </div>
+              <p class="review-tile__text" data-review-preview><?= e($preview) ?></p>
+              <?php if ($needsExpand): ?>
+                <p class="review-tile__full" data-review-full hidden><?= e($text) ?></p>
+                <button type="button" class="review-tile__more" data-review-expand aria-expanded="false">Прочитать полностью</button>
+              <?php endif; ?>
+              <?php if ($reviewDate !== '' || $reviewSource !== ''): ?>
+                <p class="review-tile__meta">
+                  <?php if ($reviewDate !== ''): ?><span class="review-tile__date"><?= e($reviewDate) ?></span><?php endif; ?>
+                  <?php if ($reviewDate !== '' && $reviewSource !== ''): ?><span aria-hidden="true">·</span><?php endif; ?>
+                  <?php if ($reviewSource !== ''): ?><span class="review-tile__source"><?= e($reviewSource) ?></span><?php endif; ?>
                 </p>
               <?php endif; ?>
-            </div>
-            <p class="review-tile__text" data-review-preview><?= e($preview) ?></p>
-            <?php if ($needsExpand): ?>
-              <p class="review-tile__full" data-review-full hidden><?= e($text) ?></p>
-              <button type="button" class="review-tile__more" data-review-expand aria-expanded="false">Прочитать полностью</button>
-            <?php endif; ?>
-            <?php if ($reviewDate !== '' || $reviewSource !== ''): ?>
-              <p class="review-tile__meta">
-                <?php if ($reviewDate !== ''): ?><span class="review-tile__date"><?= e($reviewDate) ?></span><?php endif; ?>
-                <?php if ($reviewDate !== '' && $reviewSource !== ''): ?><span aria-hidden="true">·</span><?php endif; ?>
-                <?php if ($reviewSource !== ''): ?><span class="review-tile__source"><?= e($reviewSource) ?></span><?php endif; ?>
-              </p>
-            <?php endif; ?>
-          </article>
-        <?php endforeach; ?>
+            </article>
+          <?php endforeach; ?>
+        </div>
       </div>
     </div>
     <?php endif; ?>
@@ -460,10 +473,9 @@ $processSteps = [
   <div class="cta-field">
     <div class="container cta-field__inner">
       <p class="eyebrow eyebrow--on-dark">Контакты</p>
-      <h2 id="consultation-title">Давайте начнём со знакомства</h2>
+      <h2 id="consultation-title">Ну что, познакомимся?</h2>
       <p class="cta-field__text">
-        Напишите — разберём, подходит ли запрос специализации и какие данные нужны для оценки.
-        Содержательный налоговый ответ начинается после согласования работы.
+        Можно просто написать «Здравствуйте». Дальше мы сами зададим нужные вопросы — без неловкой паузы.
       </p>
       <button class="btn btn--on-dark" type="button" data-contact-panel-open>Начать знакомство</button>
       <p class="cta-field__secondary">

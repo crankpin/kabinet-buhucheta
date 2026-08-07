@@ -13,7 +13,6 @@ if ($spineItems === []) {
 }
 ?>
 <aside class="page-spine" aria-label="На этой странице">
-  <p class="nav-kicker">На странице</p>
   <nav class="spine-sections">
     <?php foreach ($spineItems as $i => $sector): ?>
       <?php
