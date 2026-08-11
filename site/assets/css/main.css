@@ -809,37 +809,93 @@ body.nav-open .contact-panel {
   color: color-mix(in srgb, var(--color-text-inverse) 78%, transparent);
 }
 
-/* Mandarin FAB */
+/* Contact daisy FAB */
 .contact-fab {
   position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
+  right: 1.15rem;
+  bottom: 1.15rem;
   z-index: 60;
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   border: 0;
   border-radius: 50%;
   background: var(--white);
   box-shadow: var(--shadow);
   cursor: pointer;
-  padding: 4px;
-  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+  padding: 2px;
+  transition: opacity 0.28s ease, visibility 0.28s, box-shadow 0.28s ease;
+  animation: contact-fab-idle 3.8s ease-in-out infinite;
 }
 
-/* Soft-hide while hero CTA is on screen (mobile) — keeps mandarin asset */
+.contact-fab img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 55%;
+  animation: contact-daisy-sway 5.2s ease-in-out infinite;
+}
+
+.contact-fab:hover,
+.contact-fab:focus-visible {
+  animation-play-state: paused;
+  box-shadow:
+    0 10px 28px rgba(37, 48, 58, 0.16),
+    0 2px 8px rgba(37, 48, 58, 0.08);
+}
+
+.contact-fab:hover img,
+.contact-fab:focus-visible img {
+  animation-play-state: paused;
+  transform: scale(1.04);
+}
+
+/* Soft-hide while hero CTA is on screen (mobile) — keeps daisy asset */
 .contact-fab.is-deferred {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  animation: none;
   transform: translateY(10px) scale(0.94);
 }
 
+.contact-fab.is-deferred img {
+  animation: none;
+}
+
+@keyframes contact-fab-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes contact-daisy-sway {
+  0%,
+  100% {
+    transform: rotate(-2.2deg) scale(1);
+  }
+  50% {
+    transform: rotate(2.2deg) scale(1.03);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .contact-fab {
+  .contact-fab,
+  .contact-fab img {
+    animation: none;
     transition: none;
   }
 
   .contact-fab.is-deferred {
+    transform: none;
+  }
+
+  .contact-fab:hover img,
+  .contact-fab:focus-visible img {
     transform: none;
   }
 }
@@ -1221,7 +1277,7 @@ body:has(dialog[open]) .contact-panel {
   padding: 0;
 }
 
-/* Services monolith — one unified surface, three internal segments */
+/* Services monolith — unused after service-files (kept to limit this pass's CSS diff) */
 .service-monolith {
   margin-top: 2rem;
   list-style: none;

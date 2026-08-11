@@ -9,6 +9,7 @@ $page = [
     'canonical' => SITE_DOMAIN . '/',
     'body_class' => 'page-home',
     'scroll_stack' => true,
+    'service_files' => true,
     'spine' => [
         ['id' => 'nachalo', 'label' => 'Сначала главное!'],
         ['id' => 'services', 'label' => 'Чем занимаемся?'],
@@ -99,27 +100,73 @@ function home_format_date_ru(string $value): string
 $serviceSegments = [
     [
         'num' => '01',
+        'modifier' => 'ip',
         'title' => 'Бухгалтер для ИП на УСН и АУСН',
-        'text' => 'Регулярный учёт, отчётность, первичные документы, ЭДО, сотрудники и зарплата. Работаем с УСН без НДС и с НДС, а также с АУСН, когда режим применим.',
+        'rail_title' => 'ИП на УСН и АУСН',
+        'blurb' => 'ИП на УСН без НДС и с НДС, а также на АУСН — когда режим применим.',
+        'lead' => 'Карина берёт на себя согласованный объём регулярной бухгалтерской работы, а владелец понимает, что происходит и где требуется его решение.',
+        'subhead' => 'Внутри сопровождения',
+        'list' => [
+            'Налоговый учёт, расчёт налогов и контроль сроков',
+            'Подготовка и сдача отчётности',
+            'Первичные документы, ЭДО, счета и акты',
+            'Сверки с ФНС и согласованная работа с клиент-банком',
+            'Сотрудники, зарплата и кадровые документы',
+        ],
+        'note_label' => 'Важно',
+        'note' => [
+            'Ответы на требования ФНС, восстановление старых периодов и исправление прежних ошибок оцениваются отдельно.',
+        ],
         'price' => 'От 15 000 ₽ в месяц',
         'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ip/',
-        'cta' => 'К услуге',
+        'more_label' => 'Без сокращений: всё о сопровождении ИП →',
     ],
     [
         'num' => '02',
+        'modifier' => 'ooo',
         'title' => 'Бухгалтер для ООО на УСН',
-        'text' => 'Бухгалтерский и налоговый учёт, первичка, ЭДО, сотрудники, зарплата и отчётность. Сопровождаем ООО на УСН без НДС и с НДС; ООО на ОСНО не принимаем.',
+        'rail_title' => 'ООО на УСН',
+        'blurb' => 'ООО на УСН без НДС и с НДС — от состояния базы до отчётности.',
+        'lead' => 'Карина ведёт бухгалтерский и налоговый учёт, поддерживает состояние базы и заранее показывает руководителю, каких данных или решений не хватает.',
+        'subhead' => 'Внутри сопровождения',
+        'list' => [
+            'Бухгалтерский и налоговый учёт',
+            'Налоги, бухгалтерская и налоговая отчётность',
+            'Первичные документы, ЭДО, счета и акты',
+            'Клиент-банк, сверки с ФНС и контроль базы',
+            'Сотрудники, зарплата и кадровые документы',
+        ],
+        'note_label' => 'Как устроена работа',
+        'note' => [
+            'Сопровождаем ООО на УСН. Восстановление учёта, исправление прежних ошибок и ответы на требования ФНС оцениваем отдельно — после знакомства с вашей ситуацией.',
+            'С ООО на ОСНО работаем в формате отдельных консультаций, но не берём на постоянное бухгалтерское сопровождение.',
+        ],
         'price' => 'От 18 000 ₽ в месяц',
         'href' => '/uslugi/buhgalterskoe-soprovozhdenie-ooo-usn/',
-        'cta' => 'К услуге',
+        'more_label' => 'Без сокращений: всё о сопровождении ООО →',
     ],
     [
         'num' => '03',
+        'modifier' => 'tax',
         'title' => 'Налоговый консультант для ИП и организаций',
-        'text' => 'Разбор налоговых последствий по НДС, УСН, АУСН, выбору режима и переходу с ПСН. Консультации возможны и по вопросам организаций на ОСНО после предварительной оценки задачи.',
+        'rail_title' => 'Налоговая консультация',
+        'blurb' => 'Разбор налоговой ситуации до решения — для ИП и организаций, включая вопросы по ОСНО.',
+        'lead' => 'Карина изучает факты, документы и действующие правила, чтобы дать понятный вывод до того, как клиент примет налоговое решение.',
+        'subhead' => 'Что можно получить',
+        'list' => [
+            'Предварительное изучение документов',
+            'Разбор применимых налоговых правил',
+            'Расчёт или сравнение нескольких вариантов',
+            'Устное объяснение или письменный вывод',
+            'Понятную последовательность дальнейших действий',
+        ],
+        'note_label' => 'Важно',
+        'note' => [
+            'Консультация объясняет последствия и варианты. Подготовка ответа ФНС, исправление декларации или базы — отдельная работа.',
+        ],
         'price' => 'От 10 000 ₽',
         'href' => '/uslugi/nalogovoe-konsultirovanie/',
-        'cta' => 'К услуге',
+        'more_label' => 'Без сокращений: всё о налоговой консультации →',
     ],
 ];
 
@@ -220,7 +267,7 @@ $processSteps = [
         <li>Переход с ПСН</li>
       </ul>
       <div class="hero__actions">
-        <button class="btn btn--accent" type="button" data-contact-panel-open>Начать знакомство</button>
+        <button class="btn btn--accent" type="button" data-contact-panel-open>Давайте знакомиться</button>
         <a class="btn btn--ghost" href="#services">Посмотреть услуги</a>
       </div>
     </div>
@@ -235,16 +282,84 @@ $processSteps = [
       <p class="section-lead">Ведём бухгалтерию ИП и ООО на УСН и отдельно разбираем налоговые вопросы. Цена на сайте — стартовая; точная — после опросника и данных о бизнесе.</p>
     </header>
 
-    <ul class="service-monolith" aria-label="Услуги">
+    <ul class="service-files" data-service-files data-open="" data-phase="" aria-label="Услуги">
       <?php foreach ($serviceSegments as $segment): ?>
-        <li class="service-seg-item">
-          <a class="service-seg" href="<?= e(url($segment['href'])) ?>">
-            <span class="service-seg__num" aria-hidden="true"><?= e($segment['num']) ?></span>
-            <h3 class="service-seg__title"><?= e($segment['title']) ?></h3>
-            <p class="service-seg__text"><?= e($segment['text']) ?></p>
-            <p class="service-seg__price"><?= e($segment['price']) ?></p>
-            <span class="service-seg__go"><?= e($segment['cta']) ?></span>
-          </a>
+        <?php
+          $panelId = 'service-files-panel-' . $segment['num'];
+          $modifier = (string) ($segment['modifier'] ?? '');
+        ?>
+        <li class="service-files__item<?= $modifier !== '' ? ' service-files__item--' . e($modifier) : '' ?>" data-service-id="<?= e($segment['num']) ?>">
+          <div class="service-files__plaque">
+            <div class="service-files__rail" data-service-tab hidden>
+              <span class="service-files__rail-num"><?= e($segment['num']) ?></span>
+              <span class="service-files__rail-title"><?= e($segment['rail_title']) ?></span>
+              <span class="service-files__rail-hint">Распаковать</span>
+            </div>
+
+            <div class="service-files__face">
+              <button
+                type="button"
+                class="service-files__close"
+                data-service-close
+                aria-label="Короче — свернуть подробности"
+                hidden
+              >
+                <span class="service-files__close-label">Короче!</span>
+                <span class="service-files__close-icon" aria-hidden="true"></span>
+              </button>
+
+              <div class="service-files__closed">
+                <p class="service-files__num"><?= e($segment['num']) ?></p>
+                <h3 class="service-files__title"><?= e($segment['title']) ?></h3>
+                <p class="service-files__blurb"><?= e($segment['blurb']) ?></p>
+                <p class="service-files__price"><?= e($segment['price']) ?></p>
+                <button
+                  type="button"
+                  class="service-files__toggle"
+                  data-service-toggle
+                  aria-expanded="false"
+                  aria-controls="<?= e($panelId) ?>"
+                  aria-label="Распаковать услугу — открыть подробности"
+                >
+                  <span class="service-files__toggle-label">Распаковать услугу</span>
+                  <span class="service-files__toggle-seal" aria-hidden="true"></span>
+                </button>
+              </div>
+
+              <div
+                class="service-files__panel"
+                id="<?= e($panelId) ?>"
+                data-service-panel
+                aria-hidden="true"
+                inert
+              >
+                <div class="service-files__panel-inner">
+                  <div class="service-files__main">
+                    <p class="service-files__lead"><?= e($segment['lead']) ?></p>
+                    <h4 class="service-files__subhead"><?= e($segment['subhead']) ?></h4>
+                    <ul class="service-files__list">
+                      <?php foreach ($segment['list'] as $listItem): ?>
+                        <li><?= e($listItem) ?></li>
+                      <?php endforeach; ?>
+                    </ul>
+                  </div>
+                  <aside class="service-files__aside">
+                    <div class="service-files__note">
+                      <p class="service-files__note-label"><?= e($segment['note_label']) ?></p>
+                      <?php foreach ($segment['note'] as $notePara): ?>
+                        <p><?= e($notePara) ?></p>
+                      <?php endforeach; ?>
+                    </div>
+                    <p class="service-files__price service-files__price--open"><?= e($segment['price']) ?></p>
+                    <div class="service-files__actions">
+                      <button type="button" class="btn btn--accent service-files__cta" data-contact-panel-open>Обсудить мою ситуацию</button>
+                      <a class="service-files__more" href="<?= e(url($segment['href'])) ?>"><?= e($segment['more_label']) ?></a>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
       <?php endforeach; ?>
     </ul>

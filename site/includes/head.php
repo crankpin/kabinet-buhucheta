@@ -41,6 +41,9 @@ $bodyClass = trim('page ' . (string) ($page['body_class'] ?? ''));
   <link rel="preload" href="<?= e(asset('css/main.css')) ?>" as="style">
   <link rel="stylesheet" href="<?= e(asset('css/main.css')) ?>">
   <link rel="stylesheet" href="<?= e(asset('css/nav-mega.css')) ?>">
+<?php if (!empty($page['service_files'])): ?>
+  <link rel="stylesheet" href="<?= e(asset('css/expandable-service-files.css')) ?>">
+<?php endif; ?>
 </head>
 <body class="<?= e($bodyClass) ?>">
   <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>

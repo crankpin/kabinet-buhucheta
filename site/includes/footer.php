@@ -69,7 +69,13 @@ require_once __DIR__ . '/config.php';
 </footer>
 
 <button class="contact-fab" id="contact-fab" type="button" aria-label="Связаться" aria-expanded="false" aria-controls="contact-panel">
-  <img src="<?= e(asset('images/mandarin.png')) ?>" alt="" width="56" height="56" decoding="async">
+  <img
+    src="<?= e(asset('images/contact-daisy.png')) ?>"
+    alt=""
+    width="72"
+    height="72"
+    decoding="async"
+  >
 </button>
 
 <div class="contact-panel" id="contact-panel" role="dialog" aria-modal="true" aria-labelledby="contact-panel-title" hidden inert>
@@ -96,6 +102,9 @@ require_once __DIR__ . '/config.php';
 
 <script src="<?= e(asset('js/main.js')) ?>" defer></script>
 <script src="<?= e(asset('js/nav-mega.js')) ?>" defer></script>
+<?php if (!empty($page['service_files'])): ?>
+<script src="<?= e(asset('js/expandable-service-files.js')) ?>" defer></script>
+<?php endif; ?>
 <?php if (!empty($page['scroll_stack'])): ?>
 <script>
 /* Decorative desktop-only scroll effect: fetch GSAP + its assets only when

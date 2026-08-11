@@ -217,7 +217,7 @@
     });
   });
 
-  /* Mobile: defer mandarin FAB while primary hero CTA is in view */
+  /* Mobile: defer contact FAB while primary hero CTA is in view */
   (function initFabHeroDeferral() {
     if (!fab) return;
     var heroCta = document.querySelector(".hero__actions .btn--accent, .hero__actions .btn, .hero__actions [data-contact-panel-open]");
